@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Autenticar Usuario",
+  "Id": "CU-01",
+  "Breve descripción": "El sistema permite a los usuarios (Admin, Abogado, Cliente, Gerente) iniciar sesión mediante validación de credenciales para obtener un token de acceso JWT.",
+  "Actores primarios": "Administrador, Gerente, Abogado, Cliente",
+  "Actores secundarios": "MS Autenticación, Base de Datos de Credenciales",
+  "Precondiciones": [
+    "El usuario debe estar registrado en el sistema.",
+    "El servicio de Autenticación está operativo."
+  ],
+  "Flujo principal": {
+    "1": "El usuario ingresa al portal (web o móvil) y accede a la pantalla de login.",
+    "2": "El usuario introduce sus credenciales (correo y contraseña).",
+    "3": "El sistema (AuthService) aplica el hash BCrypt para comparar las credenciales.",
+    "4": "El sistema verifica el estado del usuario en el MS Usuarios.",
+    "5": "El sistema (JWTProvider) genera un token JWT con los claims del rol y permisos.",
+    "6": "El sistema redirecciona al usuario a su dashboard correspondiente."
+  },
+  "Postcondiciones": [
+    "Se inicia una sesión activa para el usuario.",
+    "Se genera un token JWT para la autorización en llamadas posteriores."
+  ],
+  "Flujos alternativos": {
+    "A1: Credenciales incorrectas": "El sistema muestra un mensaje de error y deniega el acceso.",
+    "A2: Usuario suspendido": "El sistema notifica que la cuenta está inhabilitada y bloquea el acceso."
+  }
+}
+@endjson

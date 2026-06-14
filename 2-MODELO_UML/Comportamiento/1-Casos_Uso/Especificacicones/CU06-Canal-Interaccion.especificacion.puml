@@ -1,0 +1,28 @@
+@startjson
+{
+  "Caso de uso": "Canal de Interacción",
+  "Id": "CU-06",
+  "Breve descripción": "El sistema provee un canal de comunicación segura en tiempo real entre el abogado y el cliente, permitiendo el intercambio de mensajes de chat y la gestión de sesiones de videollamadas[cite: 122].",
+  "Actores primarios": "Abogado, Cliente",
+  "Actores secundarios": "MS Comunicación, WebSockets (STOMP), Servicio de Videollamadas (WebRTC)",
+  "Precondiciones": [
+    "El usuario tiene una sesión activa[cite: 124].",
+    "Existe un caso legal abierto vinculando al cliente y al abogado."
+  ],
+  "Flujo principal": {
+    "1": "El usuario accede al módulo de comunicación dentro de un expediente[cite: 122].",
+    "2": "El sistema establece una conexión WebSocket para el intercambio de mensajes en tiempo real[cite: 123].",
+    "3": "El abogado o cliente envía un mensaje; el sistema lo persiste en la DB Comunicación[cite: 121, 328, 332].",
+    "4": "El sistema (NotificacionService) dispara alertas in-app o notificaciones push si el receptor está desconectado[cite: 329].",
+    "5": "Opcionalmente, el usuario solicita una videollamada; el sistema genera la sala y notifica a la contraparte[cite: 122, 330]."
+  },
+  "Postcondiciones": [
+    "El historial de comunicación queda registrado y disponible para consulta[cite: 121].",
+    "La solicitud de videollamada queda vinculada al expediente correspondiente."
+  ],
+  "Flujos alternativos": {
+    "A1: Conexión WebSocket perdida": "El sistema intenta la reconexión automática y notifica al usuario sobre el estado de la comunicación.",
+    "A2: Videollamada rechazada": "El sistema registra el intento fallido y notifica al solicitante que el abogado no está disponible."
+  }
+}
+@endjson
