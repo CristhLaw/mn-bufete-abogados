@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU03 - Gestionar Repositorio"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+actor "Abogado" as abogado
+actor "Cliente" as cliente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral"{
+    usecase "◉\n<size:18><b>CU03</b></size>\nGestionar Repositorio" as UC_Repo
+    usecase "⬆\nCargar Documento" as UC_Cargar
+    usecase "⬇\nDescargar Documento" as UC_Descargar
+    usecase "🛡\nValidar Auditoría" as UC_Auditoria
+    usecase "🔑\nAutenticar Usuario" as UC_Auth
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+abogado --> UC_Repo
+cliente --> UC_Repo
+
+UC_Repo .> UC_Cargar : <<include>>
+UC_Repo .> UC_Descargar : <<include>>
+UC_Repo .> UC_Auditoria : <<include>>
+UC_Repo .> UC_Auth : <<include>>
+
+legend right
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+| ◉ | Caso de uso principal |
+| ⬆/⬇ | Acciones de archivo |
+| 🛡 | Trazabilidad del documento |
+| 🔑 | Flujo obligatorio de sesión |
+endlegend
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+endfooter
+@enduml

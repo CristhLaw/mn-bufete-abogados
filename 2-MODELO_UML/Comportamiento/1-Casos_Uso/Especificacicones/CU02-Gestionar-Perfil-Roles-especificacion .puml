@@ -1,3 +1,4 @@
+@startjson
 {
   "Caso de uso": "Gestionar Perfil y Roles",
   "Id": "CU-02",
@@ -25,3 +26,4 @@
     "A2: Error de validación": "El sistema solicita corregir campos obligatorios mal diligenciados."
   }
 }
+@endjson

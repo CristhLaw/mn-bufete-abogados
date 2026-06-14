@@ -1,5 +1,6 @@
 @startuml
-title Diagrama de Clases - Sistema IURIS
+title Diagrama de Clases - Sistema Web de Gestión y Seguimiento de Casos Legales
+
 
 '====================================
 ' ENUMS

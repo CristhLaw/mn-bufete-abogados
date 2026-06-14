@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+!theme bluegray
+skinparam footerFontColor black
+title size:20Caso de uso "CU04 - Canal de Interacción"
+
+' =====================================================
+' ACTORES
+' =====================================================
+actor "Cliente" as cliente
+actor "Abogado" as abogado
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral"{
+    usecase "◉\nsize:18CU04\nCanal de Interacción" as UC_Interaccion
+    usecase "💬\nChat en Tiempo Real" as UC_Chat
+    usecase "📹\nGestionar Videollamada" as UC_Video
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+cliente --> UC_Interaccion
+abogado --> UC_Interaccion
+
+UC_Interaccion .> UC_Chat : <>
+UC_Interaccion .> UC_Video : <>
+UC_Interaccion .> UC_Auth : <>
+
+legend right
+|= Símbolo |= Descripción |
+| ◉ | Caso de uso principal |
+| 💬 | Chat en tiempo real |
+| 📹 | Gestión de videollamadas |
+| <> | Flujo obligatorio |
+endlegend
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+endfooter
+@enduml
