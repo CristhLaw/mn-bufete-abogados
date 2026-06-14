@@ -1,25 +1,31 @@
-# Actor: Administrador
+# Actor: Administrador del Sistema
 
 ## Descripción
 
-Usuario responsable de la configuración y supervisión general del sistema.
+Superusuario responsable de la configuración global y supervisión general del sistema IURIS. Accede mediante la aplicación web.
 
 ## Objetivo
 
-Garantizar el correcto funcionamiento del sistema y controlar los accesos.
+Garantizar el correcto funcionamiento del sistema, controlar los accesos y soportar la operación multisede del bufete.
 
 ## Responsabilidades
 
-* Gestionar usuarios.
-* Gestionar abogados.
+* Gestionar usuarios (creación, edición, suspensión, eliminación).
+* Gestionar abogados (perfil profesional y especialidad).
 * Gestionar clientes.
-* Gestionar roles.
-* Gestionar permisos.
-* Gestionar configuraciones.
-* Gestionar categorías legales.
-* Supervisar auditorías.
-* Generar estadísticas.
-* Generar reportes administrativos.
+* Gestionar roles y permisos (Administrador, Gerente/Socio, Abogado Principal, Abogado Asistente, Secretaria, Cliente).
+* Configurar sedes del bufete (arquitectura multisede).
+* Gestionar tipos de caso / especialidades legales (configuración dinámica, p. ej. agregar Derecho Tributario).
+* Supervisar la auditoría de acceso a documentos legales.
+* Generar estadísticas y reportes administrativos.
+* Configurar parámetros generales del sistema.
+
+## Microservicios con los que interactúa
+
+* **MS Usuarios** — gestión de usuarios, roles, permisos y sedes (RolManager, SedeValidator).
+* **MS Casos Legales** — configuración de tipos de caso.
+* **MS Documentos** — auditoría de accesos (AuditoriaAccesoService).
+* **MS Reportes** — generación de reportes y estadísticas administrativas.
 
 ## Casos de Uso
 
@@ -41,10 +47,12 @@ CU-AD-08 Gestionar Permisos
 
 CU-AD-09 Configurar Sistema
 
-CU-AD-10 Gestionar Categorías Legales
+CU-AD-10 Gestionar Categorías / Especialidades Legales
 
-CU-AD-11 Ver Auditoría
+CU-AD-11 Ver Auditoría de Documentos
 
 CU-AD-12 Generar Estadísticas
 
-CU-AD-13 Generar Reportes
+CU-AD-13 Generar Reportes Administrativos
+
+CU-AD-14 Gestionar Sedes
