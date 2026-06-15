@@ -1,47 +1,171 @@
 @startuml
+
 left to right direction
-!theme bluegray
 
-skinparam footerFontColor black
-title <size:20><b>Caso de uso "CU - Gestionar Sesión"</b></size>
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+skinparam shadowing false
 
-' =====================================================
-' ACTORES
-' =====================================================
-actor "Cliente" as cliente
-actor "Abogado" as abogado
-actor "Administrador" as admin
-
-' =====================================================
-' SISTEMA
-' =====================================================
-rectangle "IURIS - Sistema Integral"{
-    usecase "◉\n<size:18><b>CU01</b></size>\nGestionar Sesión" as UC_Sesion
-    usecase "🔑\nValidar Credenciales" as UC_Validar
-    usecase "🔐\nGenerar Token JWT" as UC_JWT
-    usecase "⚠\nMostrar Error" as UC_Error
+skinparam usecase {
+BackgroundColor #E8F5E9
+BorderColor #2E7D32
 }
 
-' =====================================================
-' RELACIONES
-' =====================================================
-cliente --> UC_Sesion
-abogado --> UC_Sesion
-admin --> UC_Sesion
+skinparam actor {
+BorderColor #1B5E20
+}
 
-UC_Sesion .> UC_Validar : <<include>>
-UC_Sesion .> UC_JWT : <<include>>
-UC_Error .> UC_Sesion : <<extend>>
+actor Cliente
+actor "Abogado Principal" as Abogado
+actor Administrador
 
-legend right
-|= <b>Símbolo</b> |= <b>Descripción</b> |
-| ◉ | Caso de uso principal |
-| 🔑 | Validación de acceso |
-| 🔐 | Emisión de Token |
-| ⚠ | Manejo de excepciones |
-endlegend
+rectangle "SISTEMA IURIS - MINI BUFETE DE ABOGADOS" {
 
-footer
-<b>IURIS - LexTech Solutions S.A.C.</b>
-endfooter
+
+package "Autenticación y Perfil" {
+
+    usecase "Registrarse" as UC1
+    usecase "Iniciar Sesión" as UC2
+    usecase "Recuperar Contraseña" as UC3
+    usecase "Gestionar Perfil" as UC4
+
+}
+
+package "Gestión de Casos" {
+
+    usecase "Solicitar Consulta Legal" as UC5
+    usecase "Crear Expediente" as UC6
+    usecase "Actualizar Estado del Caso" as UC7
+    usecase "Ver Estado del Caso" as UC8
+    usecase "Ver Historial de Casos" as UC9
+    usecase "Registrar Actuación Procesal" as UC10
+    usecase "Registrar Resolución" as UC11
+    usecase "Cerrar Caso" as UC12
+
+}
+
+package "Gestión de Documentos" {
+
+    usecase "Subir Documento" as UC13
+    usecase "Descargar Documento" as UC14
+    usecase "Auditar Accesos a Documentos" as UC15
+
+}
+
+package "Gestión de Citas y Audiencias" {
+
+    usecase "Agendar Cita" as UC16
+    usecase "Reprogramar Cita" as UC17
+    usecase "Cancelar Cita" as UC18
+    usecase "Gestionar Audiencias" as UC19
+
+}
+
+package "Gestión de Pagos" {
+
+    usecase "Realizar Pago" as UC20
+    usecase "Ver Historial de Pagos" as UC21
+
+}
+
+package "Comunicación" {
+
+    usecase "Chat Cliente-Abogado" as UC22
+    usecase "Solicitar Videollamada" as UC23
+    usecase "Recibir Notificaciones" as UC24
+
+}
+
+package "Administración del Sistema" {
+
+    usecase "Gestionar Usuarios" as UC25
+    usecase "Gestionar Clientes" as UC26
+    usecase "Gestionar Abogados" as UC27
+    usecase "Gestionar Roles" as UC28
+    usecase "Gestionar Permisos" as UC29
+    usecase "Gestionar Especialidades Legales" as UC30
+    usecase "Gestionar Sedes" as UC31
+    usecase "Configurar Sistema" as UC32
+    usecase "Generar Estadísticas" as UC33
+    usecase "Generar Reportes Administrativos" as UC34
+
+}
+
+}
+
+'==========================
+' CLIENTE
+'==========================
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+
+Cliente --> UC5
+Cliente --> UC8
+Cliente --> UC9
+
+Cliente --> UC13
+Cliente --> UC14
+
+Cliente --> UC16
+Cliente --> UC17
+Cliente --> UC18
+
+Cliente --> UC20
+Cliente --> UC21
+
+Cliente --> UC22
+Cliente --> UC23
+Cliente --> UC24
+
+'==========================
+' ABOGADO
+'==========================
+
+Abogado --> UC2
+Abogado --> UC4
+
+Abogado --> UC6
+Abogado --> UC7
+Abogado --> UC10
+Abogado --> UC11
+Abogado --> UC12
+
+Abogado --> UC13
+Abogado --> UC14
+
+Abogado --> UC19
+
+Abogado --> UC22
+Abogado --> UC23
+Abogado --> UC24
+
+'==========================
+' ADMINISTRADOR
+'==========================
+
+Administrador --> UC15
+
+Administrador --> UC25
+Administrador --> UC26
+Administrador --> UC27
+Administrador --> UC28
+Administrador --> UC29
+Administrador --> UC30
+Administrador --> UC31
+Administrador --> UC32
+Administrador --> UC33
+Administrador --> UC34
+
+'==========================
+' RELACIONES INCLUDE
+'==========================
+
+UC12 ..> UC11 : <<include>>
+
+UC13 ..> UC15 : <<include>>
+UC14 ..> UC15 : <<include>>
+
 @enduml
