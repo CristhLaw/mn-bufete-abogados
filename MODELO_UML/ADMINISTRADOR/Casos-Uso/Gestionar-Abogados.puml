@@ -1,0 +1,31 @@
+@startuml
+
+left to right direction
+
+actor Administrador
+
+rectangle "Sistema de Gestión Legal" {
+
+usecase "Gestionar Abogados" as GA
+
+usecase "Registrar abogado" as RA
+usecase "Actualizar información\n del abogado" as UA
+usecase "Consultar abogado" as CA
+usecase "Eliminar abogado" as EA
+usecase "Asignar especialidad" as AE
+usecase "Activar / Desactivar abogado" as ADA
+
+
+GA ..> RA : <<include>>
+GA ..> UA : <<include>>
+GA ..> CA : <<include>>
+GA ..> EA : <<include>>
+GA ..> AE : <<include>>
+GA ..> ADA : <<include>>
+
+}
+
+Administrador --> GA
+
+
+@enduml
