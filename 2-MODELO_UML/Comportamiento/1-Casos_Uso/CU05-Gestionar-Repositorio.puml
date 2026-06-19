@@ -1,0 +1,78 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU05 - Gestionar Repositorio"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+
+actor "Abogado" as abogado
+actor "Cliente" as cliente
+actor "Administrador" as admin
+
+' =====================================================
+' SISTEMA
+' =====================================================
+
+rectangle "IURIS - Sistema Integral"{
+
+    usecase "◉\n<size:18><b>CU05</b></size>\nGestionar Repositorio" as UC_Repositorio
+
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+    usecase "📁\nCargar/Consultar\nDocumentos" as UC_Cargar
+    usecase "🔍\nAuditar acceso\na archivos" as UC_Auditoria
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+abogado --> UC_Repositorio : Accede
+cliente --> UC_Repositorio : Accede
+admin --> UC_Repositorio : Accede
+
+UC_Repositorio .> UC_Auth : <<include>>
+UC_Repositorio .> UC_Cargar : <<include>>
+UC_Repositorio .> UC_Auditoria : <<include>>
+
+UC_error .> UC_Repositorio : <<extend>>
+
+' =====================================================
+' LEYENDA PROFESIONAL
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Verificación de identidad |
+| 📁 | Gestión documental |
+| 🔍 | Trazabilidad y auditoría |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
+@enduml

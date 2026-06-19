@@ -1,0 +1,27 @@
+{
+  "Caso de uso": "Gestionar Perfil y Roles",
+  "Id": "CU-02",
+  "Breve descripción": "El administrador gestiona los datos de identidad, asignación de roles y permisos de los usuarios dentro del sistema.",
+  "Actores primarios": "Administrador",
+  "Actores secundarios": "MS Usuarios, Base de Datos de Usuarios",
+  "Precondiciones": [
+    "El administrador ha iniciado sesión con permisos elevados.",
+    "El usuario a gestionar existe o se desea crear uno nuevo."
+  ],
+  "Flujo principal": {
+    "1": "El administrador accede al módulo de administración de usuarios.",
+    "2": "El sistema muestra el listado de usuarios registrados.",
+    "3": "El administrador selecciona una acción (Crear, Editar, Suspender).",
+    "4": "El sistema solicita los datos actualizados, rol y asignación de sede.",
+    "5": "El administrador confirma los cambios.",
+    "6": "El sistema (UsuarioService) valida las reglas de negocio y persiste los cambios."
+  },
+  "Postcondiciones": [
+    "La información del usuario o su rol queda actualizada en el sistema.",
+    "Los permisos de acceso se aplican en tiempo real para las próximas peticiones."
+  ],
+  "Flujos alternativos": {
+    "A1: Rol no permitido": "El sistema bloquea la asignación si el rol no es compatible con la sede.",
+    "A2: Error de validación": "El sistema solicita corregir campos obligatorios mal diligenciados."
+  }
+}

@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Gestionar Repositorio",
+  "Id": "CU-05",
+  "Breve descripción": "El sistema permite la carga, clasificación y auditoría de documentos asociados a expedientes legales en la nube.",
+  "Actores primarios": "Abogado, Cliente",
+  "Actores secundarios": "MS Documentos, Cloudinary (Almacenamiento externo)",
+  "Precondiciones": [
+    "El caso legal está abierto.",
+    "El archivo cumple con los formatos permitidos (PDF, DOCX, JPG)."
+  ],
+  "Flujo principal": {
+    "1": "El usuario selecciona el caso y accede al módulo documental.",
+    "2": "El usuario sube un archivo desde su equipo.",
+    "3": "El sistema (ArchivoValidator) valida tipo y tamaño.",
+    "4": "El sistema (CloudinaryAdapter) transfiere el archivo y obtiene una URL segura.",
+    "5": "El sistema registra los metadatos y guarda el log de auditoría.",
+    "6": "El sistema muestra el documento en el listado del expediente."
+  },
+  "Postcondiciones": [
+    "El documento es persistido con trazabilidad completa.",
+    "Se registra el log de acceso para auditoría."
+  ],
+  "Flujos alternativos": {
+    "A1: Formato no permitido": "El sistema rechaza la carga y muestra el mensaje de error.",
+    "A2: Fallo en Cloudinary": "El sistema notifica un error de conexión y aborta el proceso."
+  }
+}
+@endjson

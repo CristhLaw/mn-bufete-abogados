@@ -1,0 +1,76 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU06 - Canal de Interacción"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+
+actor "Abogado" as abogado
+actor "Cliente" as cliente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+
+rectangle "IURIS - Sistema Integral"{
+
+    usecase "◉\n<size:18><b>CU06</b></size>\nCanal de Interacción" as UC_Comms
+
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+    usecase "💬\nChat en tiempo real" as UC_Chat
+    usecase "📹\nGestionar Videollamada" as UC_Video
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+abogado --> UC_Comms : Accede
+cliente --> UC_Comms : Accede
+
+UC_Comms .> UC_Auth : <<include>>
+UC_Comms .> UC_Chat : <<include>>
+UC_Comms .> UC_Video : <<include>>
+
+UC_error .> UC_Comms : <<extend>>
+
+' =====================================================
+' LEYENDA PROFESIONAL
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Verificación de identidad |
+| 💬 | Comunicación asíncrona |
+| 📹 | Comunicación audiovisual |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
+@enduml

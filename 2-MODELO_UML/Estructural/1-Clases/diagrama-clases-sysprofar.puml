@@ -1,0 +1,116 @@
+@startuml
+title Diagrama de Clases - Sistema IURIS
+
+'====================================
+' ENUMS
+' ===================================
+enum EstadoCaso {
+    ABIERTO
+    EN_AUDIENCIA
+    CERRADO
+    ARCHIVADO
+}
+
+enum Rol {
+    ADMINISTRADOR
+    GERENTE
+    ABOGADO_PRINCIPAL
+    ABOGADO_ASISTENTE
+    SECRETARIA
+    CLIENTE
+}
+
+'=================================
+' USUARIOS (MS USUARIOS)
+'=================================
+abstract class Usuario {
+    - idUsuario: UUID
+    - username: String
+    - password: String
+    - nombres: String
+    - email: String
+    - estado: boolean
+    + login(): boolean
+    + tienePermiso(permiso:String): boolean
+}
+
+class Abogado {
+    - especialidad: String
+    - cargaTrabajo: int
+    + registrarActuacion(): void
+}
+
+class Cliente {
+    - dniRuc: String
+    - telefono: String
+    + consultarExpediente(): void
+}
+
+Usuario <|-- Abogado : es un tipo de
+Usuario <|-- Cliente : es un tipo de
+
+'=====================================
+' CASOS LEGALES (MS CASOS)
+'=====================================
+class CasoLegal {
+    - idCaso: UUID
+    - titulo: String
+    - especialidad: String
+    - estado: EstadoCaso
+    - fechaApertura: Date
+    + asignarAbogado(abogado: Abogado): void
+    + actualizarEstado(nuevoEstado: EstadoCaso): void
+}
+
+class ActuacionProcesal {
+    - idActuacion: UUID
+    - descripcion: String
+    - fecha: DateTime
+    + registrar(): void
+}
+
+CasoLegal "1" *-- "0..*" ActuacionProcesal : contiene
+Abogado "1" -- "*" CasoLegal : gestiona
+
+'=========================================
+' AGENDA (MS AGENDA)
+'=========================================
+class EventoAgenda {
+    - idEvento: UUID
+    - titulo: String
+    - fechaHora: DateTime
+    - esUrgente: boolean
+    + validarConflicto(): boolean
+    + enviarRecordatorio(): void
+}
+
+CasoLegal "1" --> "0..*" EventoAgenda : vinculado a
+
+'=========================================
+' DOCUMENTOS (MS DOCUMENTOS)
+'=========================================
+class Documento {
+    - idDoc: UUID
+    - nombre: String
+    - urlCloudinary: String
+    - formato: String
+    + subirCloudinary(): void
+    + registrarAuditoria(): void
+}
+
+CasoLegal "1" o-- "*" Documento : incluye
+
+'=========================================
+' COMUNICACIÓN (MS COMUNICACIÓN)
+'=========================================
+class Mensaje {
+    - idMensaje: UUID
+    - contenido: String
+    - fechaEnvio: DateTime
+    + enviar(): void
+}
+
+Cliente "1" -- "1" Abogado : se comunica >
+Mensaje "*" --> "1" CasoLegal : contexto
+
+@enduml

@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU02 - Logearse"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+
+actor "Administrador" as admin
+actor "dueño" as dueno
+actor "Vendedor (central)" as vc
+actor "Vendedor (Sucursal)" as vs
+
+' =====================================================
+' SISTEMA
+' =====================================================
+
+rectangle "SYS PROFAR"{
+
+    usecase "◉\n<size:18><b>CU02</b></size>\nLogearse" as UC_Login
+
+    usecase "🔐\nValidar\ncredenciales" as UC_Validar
+
+    usecase "🪪\nGenerar\nToken JWT" as UC_JWT
+
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+admin --> UC_Login : Accede
+dueno --> UC_Login : Accede
+vc --> UC_Login : Accede
+vs --> UC_Login : Accede
+
+UC_Login .> UC_Validar : <<include>>
+UC_Login .> UC_JWT : <<include>>
+
+UC_error .> UC_Login : <<extend>>
+
+' =====================================================
+' LEYENDA PROFESIONAL
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Validación de credenciales |
+| 🪪 | Generación de token JWT |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>SYS PROFAR</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
+@enduml

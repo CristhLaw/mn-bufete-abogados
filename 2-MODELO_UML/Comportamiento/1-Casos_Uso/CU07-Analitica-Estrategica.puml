@@ -1,0 +1,76 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU07 - Analítica Estratégica"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+
+actor "Administrador" as admin
+actor "Gerente / Socio" as gerente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+
+rectangle "IURIS - Sistema Integral"{
+
+    usecase "◉\n<size:18><b>CU07</b></size>\nAnalítica Estratégica" as UC_Analitica
+
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+    usecase "📊\nGenerar Reportes\n(PDF/Excel)" as UC_Reportes
+    usecase "🖥\nVisualizar Dashboard\nKPIs en tiempo real" as UC_Dashboard
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+admin --> UC_Analitica : Accede
+gerente --> UC_Analitica : Accede
+
+UC_Analitica .> UC_Auth : <<include>>
+UC_Analitica .> UC_Reportes : <<include>>
+UC_Analitica .> UC_Dashboard : <<include>>
+
+UC_error .> UC_Analitica : <<extend>>
+
+' =====================================================
+' LEYENDA PROFESIONAL
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Verificación de identidad |
+| 📊 | Consolidación de datos |
+| 🖥 | Monitoreo de KPIs |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
+@enduml
