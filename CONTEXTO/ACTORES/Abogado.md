@@ -60,3 +60,22 @@ CU-AB-11 Registrar Resolución
 CU-AB-12 Cerrar Caso
 
 CU-AB-13 Comunicarse con el Cliente (Chat / Videollamada)
+
+---
+
+## Detalle: CU-AB-05 Actualizar Estado de Caso
+
+* **Diagrama:** `MODELO_UML/ABOGADO/Casos-Uso/ActualizarCaso.puml`
+* **Actor principal:** Abogado Principal
+* **Descripción:** El abogado cambia el estado de un caso asignado siguiendo las transiciones válidas del ciclo de vida legal.
+* **Microservicio:** MS Casos Legales (`CasoController`, `EstadoCasoMachine`, `NotificacionCasoPublisher`)
+* **Precondición:** El abogado debe estar autenticado y el caso debe estar asignado a él.
+* **Flujo principal:**
+    1. El abogado accede al expediente del caso.
+    2. Selecciona el nuevo estado deseado.
+    3. `EstadoCasoMachine` valida que la transición sea permitida (RN-09).
+    4. El sistema registra el cambio en `DB Casos`.
+    5. `NotificacionCasoPublisher` emite el evento `CasoActualizado` hacia MS Comunicación (RN-14).
+    6. El cliente recibe notificación del cambio de estado.
+* **Flujo alterno:** Si la transición no es válida, el sistema muestra un mensaje de error y mantiene el estado anterior.
+* **Postcondición:** El caso queda en el nuevo estado y el cliente es notificado automáticamente.

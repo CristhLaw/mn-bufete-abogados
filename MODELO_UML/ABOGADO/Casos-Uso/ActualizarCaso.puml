@@ -1,22 +1,96 @@
 @startuml
-'https://plantuml.com/use-case-diagram
+left to right direction
+!theme bluegray
 
-:Main Admin: as Admin
-(Use the application) as (Use)
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU-AB-05 - Actualizar Estado de Caso"</b></size>
 
-User -> (Start)
-User --> (Use)
+' =====================================================
+' ACTORES
+' =====================================================
 
-Admin ---> (Use)
+actor "Abogado Principal" as abogado
 
-note right of Admin : This is an example.
+' =====================================================
+' SISTEMA
+' =====================================================
 
-note right of (Use)
-A note can also
-be on several lines
+rectangle "IURIS - Sistema Integral" {
+
+    usecase "◉\n<size:18><b>CU-AB-05</b></size>\nActualizar Estado\nde Caso" as UC_Actualizar
+
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+    usecase "📋\nValidar transición\nde estado" as UC_Validar
+    usecase "💾\nRegistrar cambio\nde estado" as UC_Registrar
+    usecase "📢\nNotificar al cliente" as UC_Notificar
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+abogado --> UC_Actualizar : Accede
+
+UC_Actualizar .> UC_Auth : <<include>>
+UC_Actualizar .> UC_Validar : <<include>>
+UC_Actualizar .> UC_Registrar : <<include>>
+UC_Actualizar .> UC_Notificar : <<include>>
+
+UC_error .> UC_Actualizar : <<extend>>
+
+' =====================================================
+' NOTAS DE CONTEXTO
+' =====================================================
+
+note right of UC_Validar
+  **EstadoCasoMachine (RN-09)**
+  Transiciones válidas:
+  Activo → En Audiencia
+  En Audiencia → En Espera
+  En Espera → Cerrado
+  Cerrado → Archivado
 end note
 
-note "This note is connected\nto several objects." as N2
-(Start) .. N2
-N2 .. (Use)
+note bottom of UC_Notificar
+  **NotificacionCasoPublisher (RN-14)**
+  Emite evento "CasoActualizado"
+  hacia MS Comunicación
+end note
+
+' =====================================================
+' LEYENDA
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Verificación de identidad (MS Autenticación) |
+| 📋 | Validación de transición (EstadoCasoMachine) |
+| 💾 | Persistencia en MS Casos Legales |
+| 📢 | Notificación automática al cliente |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
 @enduml
