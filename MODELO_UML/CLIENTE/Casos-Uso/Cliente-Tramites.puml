@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+actor Cliente
+
+rectangle "Gestión de Casos" {
+  usecase "Solicitar Consulta Legal" as UC1
+  usecase "Ver Estado del Caso" as UC2
+  usecase "Ver Historial del Caso" as UC3
+  usecase "Subir Documento" as UC4
+  usecase "Descargar Documento" as UC5
+}
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+Cliente --> UC5
+@enduml

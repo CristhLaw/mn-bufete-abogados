@@ -1,0 +1,18 @@
+@startuml
+left to right direction
+actor "Abogado Principal" as Abogado
+actor "Cliente" as Cliente
+
+rectangle "Gestión de Audiencias" {
+  usecase "Agendar Audiencia" as UC1
+  usecase "Reprogramar Audiencia" as UC2
+  usecase "Cancelar Audiencia" as UC3
+  usecase "Ver Audiencias Programadas" as UC4
+}
+
+Abogado --> UC1
+Abogado --> UC2
+Abogado --> UC3
+Abogado --> UC4
+Cliente --> UC4
+@enduml

@@ -1,0 +1,28 @@
+@startuml
+title C4 Nivel 3 - Componentes de CaseService
+
+actor "API Gateway" as APIGW
+actor "Base de datos de casos" as DBCase
+actor "Bus de eventos" as EventBus
+
+package "CaseService" {
+  [CaseController] as Controller
+  [CaseService] as Service
+  [CaseRepository] as Repository
+  [CaseAssignmentEngine] as Assignment
+  [CaseEventPublisher] as Publisher
+  [CaseDomainModel] as Domain
+  [NotificationAdapter] as Notification
+}
+
+APIGW --> Controller : HTTP REST
+Controller --> Service : Orquesta operaciones de caso
+Service --> Repository : Persistencia de casos
+Service --> Assignment : Selección de abogado
+Service --> Domain : Reglas de negocio de caso
+Service --> Publisher : Publica eventos de dominio
+Service --> Notification : Envía notificaciones
+Publisher --> EventBus : Evento "Caso actualizado"
+Repository --> DBCase : CRUD casos
+
+@enduml

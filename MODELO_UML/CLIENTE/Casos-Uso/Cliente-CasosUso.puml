@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+
+actor Cliente
+
+rectangle "Gestión de Cliente" {
+  usecase "Registrarse" as UC1
+  usecase "Iniciar Sesión" as UC2
+  usecase "Recuperar Contraseña" as UC3
+  usecase "Gestionar Perfil" as UC4
+  usecase "Solicitar Consulta Legal" as UC5
+  usecase "Ver Estado del Caso" as UC6
+  usecase "Ver Historial del Caso" as UC7
+  usecase "Subir Documento" as UC8
+  usecase "Descargar Documento" as UC9
+  usecase "Agendar Cita" as UC10
+  usecase "Reprogramar Cita" as UC11
+  usecase "Cancelar Cita" as UC12
+  usecase "Chat con Abogado" as UC13
+  usecase "Solicitar Videollamada" as UC14
+  usecase "Recibir Notificaciones" as UC15
+}
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+Cliente --> UC5
+Cliente --> UC6
+Cliente --> UC7
+Cliente --> UC8
+Cliente --> UC9
+Cliente --> UC10
+Cliente --> UC11
+Cliente --> UC12
+Cliente --> UC13
+Cliente --> UC14
+Cliente --> UC15
+
+UC11 ..> UC10 : <<include>>
+UC12 ..> UC10 : <<include>>
+@enduml

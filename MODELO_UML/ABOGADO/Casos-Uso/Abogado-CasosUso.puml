@@ -1,0 +1,40 @@
+@startuml
+left to right direction
+
+actor "Abogado Principal" as Abogado
+actor "Abogado Asistente" as Asistente
+
+rectangle "Gestión de Casos" {
+  usecase "Crear Expediente" as UC1
+  usecase "Actualizar Estado del Caso" as UC2
+  usecase "Registrar Actuación Procesal" as UC3
+  usecase "Registrar Resolución" as UC4
+  usecase "Cerrar Caso" as UC5
+  usecase "Ver Historial del Caso" as UC6
+  usecase "Subir Documento" as UC7
+  usecase "Descargar Documento" as UC8
+  usecase "Gestionar Audiencias" as UC9
+  usecase "Chat con Cliente" as UC10
+  usecase "Solicitar Videollamada" as UC11
+}
+
+Abogado --> UC1
+Abogado --> UC2
+Abogado --> UC3
+Abogado --> UC4
+Abogado --> UC5
+Abogado --> UC6
+Abogado --> UC7
+Abogado --> UC8
+Abogado --> UC9
+Abogado --> UC10
+Abogado --> UC11
+
+Asistente --> UC3
+Asistente --> UC6
+Asistente --> UC7
+Asistente --> UC8
+Asistente --> UC9
+
+UC5 ..> UC4 : <<include>>
+@enduml

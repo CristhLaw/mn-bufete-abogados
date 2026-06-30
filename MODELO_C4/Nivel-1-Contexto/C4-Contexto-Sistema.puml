@@ -1,0 +1,32 @@
+@startuml
+title C4 Nivel 1 - Contexto del Sistema IURIS
+
+actor Cliente as Cliente
+actor Abogado as Abogado
+actor Administrador as Administrador
+actor Gerente as Gerente
+
+rectangle "Sistema IURIS" as IURIS {
+  rectangle "Portal Web\nAngular SPA" as WebApp
+  rectangle "Aplicación Móvil\nFlutter" as MobileApp
+  rectangle "API Gateway\nSpring Cloud Gateway" as APIGW
+}
+
+Cliente --> WebApp : Usa
+Cliente --> MobileApp : Usa
+Abogado --> WebApp : Usa
+Administrador --> WebApp : Usa
+Gerente --> WebApp : Usa
+
+WebApp --> APIGW : Solicita servicios
+MobileApp --> APIGW : Solicita servicios
+
+package "Sistemas Externos" as Externos {
+  rectangle "Cloudinary\nAlmacenamiento de documentos" as Cloudinary
+  rectangle "Servicio de Videollamadas\nWebRTC / Jitsi" as Video
+}
+
+APIGW --> Cloudinary : Almacena / recupera archivos
+APIGW --> Video : Inicia / controla videollamadas
+
+@enduml

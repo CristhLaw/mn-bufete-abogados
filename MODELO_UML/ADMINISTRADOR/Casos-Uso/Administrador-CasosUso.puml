@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+
+actor Administrador
+
+rectangle "Administración del Sistema" {
+  usecase "Gestionar Usuarios" as UC1
+  usecase "Gestionar Clientes" as UC2
+  usecase "Gestionar Abogados" as UC3
+  usecase "Gestionar Roles" as UC4
+  usecase "Gestionar Permisos" as UC5
+  usecase "Gestionar Especialidades Legales" as UC6
+  usecase "Gestionar Sedes" as UC7
+  usecase "Configurar Sistema" as UC8
+  usecase "Generar Estadísticas" as UC9
+  usecase "Generar Reportes Administrativos" as UC10
+  usecase "Auditar Accesos a Documentos" as UC11
+}
+
+Administrador --> UC1
+Administrador --> UC2
+Administrador --> UC3
+Administrador --> UC4
+Administrador --> UC5
+Administrador --> UC6
+Administrador --> UC7
+Administrador --> UC8
+Administrador --> UC9
+Administrador --> UC10
+Administrador --> UC11
+
+UC11 ..> UC1 : <<include>>
+UC11 ..> UC2 : <<include>>
+UC11 ..> UC3 : <<include>>
+@enduml

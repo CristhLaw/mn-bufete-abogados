@@ -1,0 +1,62 @@
+@startuml
+title C4 Nivel 2 - Contenedores del Sistema IURIS
+
+actor Cliente
+actor Abogado
+actor Administrador
+actor Gerente
+
+rectangle "Portal Web - Angular SPA" as WebApp
+rectangle "Aplicación Móvil - Flutter" as MobileApp
+rectangle "API Gateway - Spring Cloud Gateway" as APIGW
+rectangle "Servicio de Autenticación - Spring Boot" as AuthService
+rectangle "Servicio de Usuarios - Spring Boot" as UserService
+rectangle "Servicio de Casos - Spring Boot" as CaseService
+rectangle "Servicio de Agenda - Spring Boot" as ScheduleService
+rectangle "Servicio de Documentos - Spring Boot" as DocumentService
+rectangle "Servicio de Comunicación - Spring Boot" as CommunicationService
+rectangle "Servicio de Reportes - Spring Boot" as ReportingService
+
+rectangle "PostgreSQL Auth" as DBAuth
+rectangle "PostgreSQL Usuarios" as DBUser
+rectangle "PostgreSQL Casos" as DBCase
+rectangle "PostgreSQL Agenda" as DBSchedule
+rectangle "PostgreSQL Documentos" as DBDocument
+rectangle "PostgreSQL Comunicación" as DBCommunication
+rectangle "PostgreSQL Reportes" as DBReporting
+
+rectangle "Cloudinary" as Cloudinary
+rectangle "Servicio de Videollamadas" as Video
+rectangle "Bus de Eventos (Kafka / RabbitMQ)" as EventBus
+
+Cliente --> WebApp : Usa funcionalidades del sistema
+Cliente --> MobileApp : Consulta casos y recibe notificaciones
+Abogado --> WebApp : Gestiona casos, agenda y documentos
+Administrador --> WebApp : Administra usuarios, roles y permisos
+Gerente --> WebApp : Consulta reportes y dashboards
+
+WebApp --> APIGW : API REST / JWT
+MobileApp --> APIGW : API REST / JWT
+
+APIGW --> AuthService : Validar credenciales y JWT
+APIGW --> UserService : Gestión de usuarios y roles
+APIGW --> CaseService : Gestión de casos legales
+APIGW --> ScheduleService : Gestión de audiencias y citas
+APIGW --> DocumentService : Gestión de documentos y evidencias
+APIGW --> CommunicationService : Chat y mensajería
+APIGW --> ReportingService : Generación de reportes
+
+AuthService --> DBAuth
+UserService --> DBUser
+CaseService --> DBCase
+ScheduleService --> DBSchedule
+DocumentService --> DBDocument
+CommunicationService --> DBCommunication
+ReportingService --> DBReporting
+
+CaseService --> EventBus : Publica eventos de caso
+ScheduleService --> EventBus : Publica eventos de agenda
+DocumentService --> Cloudinary : Almacena archivos
+CommunicationService --> Video : Controla videollamadas
+
+@enduml

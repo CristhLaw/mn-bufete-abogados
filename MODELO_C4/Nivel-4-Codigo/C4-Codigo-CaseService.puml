@@ -1,0 +1,100 @@
+@startuml
+title C4 Nivel 4 - Código del CaseService
+
+package "CaseService" {
+  class Case {
+    + UUID id
+    + String titulo
+    + String descripcion
+    + CaseStatus estado
+    + LocalDate fechaApertura
+    + LocalDate fechaCierre
+    + Client cliente
+    + Lawyer abogadoAsignado
+    + List<Document> documentos
+    + List<Appointment> audiencias
+    + void actualizarEstado(CaseStatus)
+    + void asignarAbogado(Lawyer)
+    + void agregarDocumento(Document)
+  }
+
+  class Client {
+    + UUID id
+    + String nombre
+    + String email
+    + String telefono
+    + String tipoCliente
+    + void actualizarContacto(String, String)
+  }
+
+  class Lawyer {
+    + UUID id
+    + String nombre
+    + String especialidad
+    + int cargaTrabajo
+    + void actualizarEspecialidad(String)
+  }
+
+  class Document {
+    + UUID id
+    + String nombre
+    + String tipo
+    + String url
+    + LocalDate fechaSubida
+  }
+
+  class Appointment {
+    + UUID id
+    + LocalDateTime fechaHora
+    + String tipo
+    + String ubicacion
+    + Case caso
+  }
+
+  class CaseRepository {
+    + Case guardar(Case)
+    + Case buscarPorId(UUID)
+    + List<Case> buscarPorCliente(UUID)
+  }
+
+  class CaseService {
+    + Case crearCaso(Case)
+    + Case actualizarCaso(Case)
+    + void asignarAbogado(UUID, UUID)
+    + void agregarDocumento(UUID, Document)
+    + void programarAudiencia(UUID, Appointment)
+  }
+
+  class CaseController {
+    + ResponseEntity crearCaso(Case)
+    + ResponseEntity obtenerCaso(UUID)
+    + ResponseEntity actualizarCaso(UUID, Case)
+  }
+
+  class CaseAssignmentEngine {
+    + Lawyer seleccionarAbogado(Case)
+  }
+
+  class CaseEventPublisher {
+    + void publicarEventoCaso(Case)
+  }
+
+  class NotificationAdapter {
+    + void enviarNotificacion(String, String)
+  }
+}
+
+CaseController --> CaseService
+CaseService --> CaseRepository
+CaseService --> CaseAssignmentEngine
+CaseService --> CaseEventPublisher
+CaseService --> NotificationAdapter
+Case --> Client
+Case --> Lawyer
+Case --> Document
+Case --> Appointment
+CaseRepository --> Case
+CaseEventPublisher --> Case
+NotificationAdapter --> Case
+
+@enduml
