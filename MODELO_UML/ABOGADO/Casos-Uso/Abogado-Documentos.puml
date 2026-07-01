@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+actor "Abogado Principal" as Abogado
+actor "Abogado Asistente" as Asistente
+
+rectangle "Gestión de Documentos" {
+  usecase "Subir Documento" as UC1
+  usecase "Descargar Documento" as UC2
+  usecase "Auditar Accesos a Documentos" as UC3
+}
+
+Abogado --> UC1
+Abogado --> UC2
+Abogado --> UC3
+Asistente --> UC1
+Asistente --> UC2
+@enduml

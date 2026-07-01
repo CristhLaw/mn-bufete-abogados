@@ -1,0 +1,90 @@
+@startuml
+title C4 Nivel 4 - Código de MS Casos Legales
+
+package "MS Casos Legales" {
+
+  class CasoLegal {
+    + UUID id
+    + String titulo
+    + String descripcion
+    + EstadoCaso estado
+    + LocalDate fechaApertura
+    + LocalDate fechaCierre
+    + UUID clienteId
+    + UUID abogadoAsignadoId
+    + List<ActuacionProcesal> actuaciones
+    + void actualizarEstado(EstadoCaso)
+    + void asignarAbogado(UUID)
+  }
+
+  enum EstadoCaso {
+    ACTIVO
+    EN_AUDIENCIA
+    EN_ESPERA
+    CERRADO
+    ARCHIVADO
+  }
+
+  class ActuacionProcesal {
+    + UUID id
+    + LocalDateTime fecha
+    + String tipo
+    + UUID usuarioResponsableId
+    + String descripcion
+  }
+
+  class CasoRepository {
+    + CasoLegal guardar(CasoLegal)
+    + CasoLegal buscarPorId(UUID)
+    + List<CasoLegal> buscarPorCliente(UUID)
+    + List<CasoLegal> buscarPorAbogado(UUID)
+  }
+
+  class CasoService {
+    + CasoLegal crearCaso(CasoLegal)
+    + CasoLegal actualizarCaso(UUID, CasoLegal)
+    + void actualizarEstado(UUID, EstadoCaso)
+    + void cerrarCaso(UUID)
+  }
+
+  class AsignacionAbogadoService {
+    + UUID seleccionarAbogado(CasoLegal)
+    + boolean validarCargaMaxima(UUID)
+  }
+
+  class EstadoCasoMachine {
+    + boolean esTransicionValida(EstadoCaso, EstadoCaso)
+    + EstadoCaso siguienteEstado(EstadoCaso, String)
+  }
+
+  class ActuacionProcesalService {
+    + ActuacionProcesal registrar(UUID, ActuacionProcesal)
+    + List<ActuacionProcesal> listarPorCaso(UUID)
+  }
+
+  class NotificacionCasoPublisher {
+    + void publicarCambioEstado(CasoLegal)
+  }
+
+  class CasoController {
+    + ResponseEntity crearCaso(CasoLegal)
+    + ResponseEntity obtenerCaso(UUID)
+    + ResponseEntity actualizarCaso(UUID, CasoLegal)
+    + ResponseEntity actualizarEstado(UUID, EstadoCaso)
+  }
+}
+
+CasoController --> CasoService
+CasoService --> CasoRepository
+CasoService --> AsignacionAbogadoService
+CasoService --> EstadoCasoMachine
+CasoService --> ActuacionProcesalService
+CasoService --> NotificacionCasoPublisher
+
+CasoLegal "1" -- "0..*" ActuacionProcesal
+CasoLegal --> EstadoCaso
+CasoRepository --> CasoLegal
+ActuacionProcesalService --> ActuacionProcesal
+NotificacionCasoPublisher --> CasoLegal
+
+@enduml
