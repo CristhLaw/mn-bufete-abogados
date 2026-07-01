@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Gestionar Sesión",
+  "Id": "CU-01",
+  "Breve descripción": "El sistema permite al cliente autenticarse de forma segura mediante credenciales, obteniendo un token de sesión para acceder a los servicios del bufete IURIS.",
+  "Actores primarios": "Cliente",
+  "Actores secundarios": "Auth Service (Servicio de Identidad), Base de Datos de Usuarios",
+  "Precondiciones": [
+    "El cliente está registrado en el sistema.",
+    "El cliente tiene acceso a la plataforma IURIS."
+  ],
+  "Flujo principal": {
+    "1": "El cliente ingresa sus credenciales en la interfaz de login.",
+    "2": "El sistema (Auth Service) valida las credenciales contra la base de datos.",
+    "3": "El sistema verifica que el usuario esté activo.",
+    "4": "El sistema genera un Token JWT único con los permisos correspondientes.",
+    "5": "El sistema redirige al cliente al Dashboard principal del bufete."
+  },
+  "Postcondiciones": [
+    "La sesión queda establecida en el cliente.",
+    "El sistema registra la fecha y hora de inicio de sesión para auditoría."
+  ],
+  "Flujos alternativos": {
+    "A1: Credenciales incorrectas": "El sistema muestra un mensaje de error y solicita reingresar los datos.",
+    "A2: Cuenta bloqueada": "Si el sistema detecta intentos fallidos, bloquea temporalmente el acceso y notifica al cliente.",
+    "A3: Error de conexión": "El sistema notifica que el servicio de autenticación no está disponible en este momento."
+  }
+}
+@endjson

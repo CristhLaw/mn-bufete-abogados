@@ -1,0 +1,30 @@
+@startjson
+{
+  "Caso de uso": "Gestionar Expedientes",
+  "Id": "CU-03",
+  "Breve descripción": "Permite al abogado realizar la gestión administrativa (creación y actualización) de los expedientes, mientras el cliente mantiene capacidades de consulta y seguimiento.",
+  "Actores primarios": "Abogado, Cliente",
+  "Actores secundarios": "Casos Legales Service, Base de Datos de Auditoría",
+  "Precondiciones": [
+    "El usuario (abogado o cliente) ha iniciado sesión.",
+    "El sistema ha validado los permisos de rol correspondientes."
+  ],
+  "Flujo principal": {
+    "1": "El sistema solicita al Auth Service la verificación del rol del usuario.",
+    "2": "El usuario accede al módulo de gestión de expedientes.",
+    "3": "Si es Abogado: Puede seleccionar entre 'Crear Expediente' o 'Actualizar Estado'.",
+    "4": "Si es Cliente: Solo tiene acceso a visualizar y consultar expedientes asignados.",
+    "5": "El sistema ejecuta la operación solicitada tras validar los datos.",
+    "6": "El sistema (Auditoria Service) registra la acción de forma inalterable."
+  },
+  "Postcondiciones": [
+    "El estado del expediente es persistido en el sistema.",
+    "La trazabilidad de la operación queda guardada para auditoría legal."
+  ],
+  "Flujos alternativos": {
+    "A1: Permiso denegado": "Si un cliente intenta crear un expediente, el sistema deniega el acceso y registra un intento de acceso no autorizado.",
+    "A2: Datos inválidos": "Si el abogado ingresa campos obligatorios vacíos al crear, el sistema solicita corregir la información.",
+    "A3: Error de concurrencia": "Si dos abogados intentan modificar el mismo expediente simultáneamente, el sistema bloquea el registro temporalmente."
+  }
+}
+@endjson

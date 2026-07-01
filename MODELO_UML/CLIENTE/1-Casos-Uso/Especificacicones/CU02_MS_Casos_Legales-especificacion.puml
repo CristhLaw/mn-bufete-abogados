@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Administrar Expedientes",
+  "Id": "CU-02",
+  "Breve descripción": "El sistema permite al cliente visualizar el estado actual, el historial y las actuaciones procesales vinculadas a sus expedientes legales en el bufete.",
+  "Actores primarios": "Cliente",
+  "Actores secundarios": "Expedientes Service, Base de Datos Legal",
+  "Precondiciones": [
+    "El cliente ha iniciado sesión correctamente.",
+    "El cliente tiene al menos un expediente asignado en el sistema."
+  ],
+  "Flujo principal": {
+    "1": "El cliente accede al módulo de 'Mis Expedientes'.",
+    "2": "El sistema solicita al Auth Service la validación de la sesión.",
+    "3": "El sistema recupera la lista de expedientes asociados al cliente desde el Expedientes Service.",
+    "4": "El cliente selecciona un expediente específico.",
+    "5": "El sistema despliega el estado actual, cronología de actuaciones y documentos asociados."
+  },
+  "Postcondiciones": [
+    "Se mantiene la integridad de los datos visualizados.",
+    "La consulta queda registrada en los logs de auditoría del usuario."
+  ],
+  "Flujos alternativos": {
+    "A1: No existen expedientes": "El sistema muestra un mensaje indicando que no hay expedientes activos para el usuario.",
+    "A2: Sesión expirada": "El sistema redirige al usuario al Login para volver a autenticarse.",
+    "A3: Error de servicio": "El sistema muestra un mensaje de error genérico y sugiere intentar la consulta nuevamente más tarde."
+  }
+}
+@endjson
