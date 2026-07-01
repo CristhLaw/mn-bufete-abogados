@@ -139,7 +139,51 @@ mn-bufete-abogados/
 
 ---
 
+# 🧭 Diagramas por Usuario
 
+## Administrador
+
+### Diagrama de Estados
+
+![Estados Administrador](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Clases
+
+![Clases Administrador](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Secuencias
+
+![Secuencia Administrador](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+## Abogado
+
+### Diagrama de Estados
+
+![Estados Abogado](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Clases
+
+![Clases Abogado](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Secuencias
+
+![Secuencia Abogado](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+## Cliente
+
+### Diagrama de Estados
+
+![Estados Cliente](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Clases
+
+![Clases Cliente](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+### Diagrama de Secuencias
+
+![Secuencia Cliente](https://www.plantuml.com/plantuml/png/SoWkIImgAStDuKhEIImkLdKdoSa70000)
+
+---
 
 # 🎯 Objetivos del Sistema
 
@@ -170,5 +214,7 @@ mn-bufete-abogados/
 # 👨‍💻 Equipo de Desarrollo
 
 **CristhLaw**
+
+**puma13H**
 
 Proyecto académico de Ingeniería de Software.
