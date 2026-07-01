@@ -1,0 +1,26 @@
+@startuml
+actor "Abogado Principal" as Abogado
+participant "App Web" as Web
+participant "DocumentoController" as MSDocumentos
+participant "AuditoriaService" as MSAuditoria
+database "Base de Datos" as BD
+
+Abogado -> Web: Clic en "Auditar Accesos" (UC3)
+Web -> MSDocumentos: GET /api/documentos/auditoria
+activate MSDocumentos
+
+MSDocumentos -> MSAuditoria: obtenerHistorialAccesos()
+activate MSAuditoria
+
+MSAuditoria -> BD: SELECT * FROM RegistroAuditoria
+activate BD
+BD --> MSAuditoria: Lista de logs (quién descargó, cuándo)
+deactivate BD
+
+MSAuditoria --> MSDocumentos: Retorna lista de logs
+deactivate MSAuditoria
+
+MSDocumentos --> Web: 200 OK (Datos de auditoría)
+deactivate MSDocumentos
+Web --> Abogado: Muestra tabla con el historial de accesos
+@enduml

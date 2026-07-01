@@ -1,0 +1,61 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide empty members
+
+class AbogadoPrincipal {
+  - idAbogado: UUID
+}
+
+class Asistente {
+  - idAsistente: UUID
+}
+
+class Cliente {
+  - idCliente: UUID
+}
+
+class MensajeChat {
+  - idMensaje: UUID
+  - contenido: String
+  - fechaEnvio: DateTime
+  - emisor: String
+  - estado: EstadoMensaje
+}
+
+class Videollamada {
+  - idLlamada: UUID
+  - enlaceSala: String
+  - fechaProgramada: DateTime
+  - estado: EstadoLlamada
+}
+
+class Notificacion {
+  - idNotificacion: UUID
+  - titulo: String
+  - cuerpo: String
+  - leida: Boolean
+  - fechaRecepcion: DateTime
+}
+
+enum EstadoMensaje {
+  ENVIADO
+  ENTREGADO
+  LEIDO
+}
+
+enum EstadoLlamada {
+  SOLICITADA
+  EN_CURSO
+  FINALIZADA
+}
+
+AbogadoPrincipal "1" -- "0..*" MensajeChat : envía >
+Asistente "1" -- "0..*" MensajeChat : envía >
+Cliente "1" -- "0..*" MensajeChat : recibe >
+
+AbogadoPrincipal "1" -- "0..*" Videollamada : solicita >
+Cliente "1" -- "0..*" Videollamada : se une a >
+
+AbogadoPrincipal "1" -- "0..*" Notificacion : recibe >
+Asistente "1" -- "0..*" Notificacion : recibe >
+@enduml

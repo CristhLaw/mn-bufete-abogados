@@ -1,0 +1,28 @@
+@startuml
+actor "Abogado Principal" as Abogado
+participant "App Web" as Web
+participant "ComunicacionController" as MSCom
+participant "NotificacionService" as MSNotif
+database "Base de Datos" as BD
+actor "Cliente" as Cliente
+
+Abogado -> Web: Clic en "Solicitar Videollamada" (UC2)
+Web -> MSCom: POST /api/videollamadas/solicitar
+activate MSCom
+
+MSCom -> MSCom: Generar enlace único de sala (WebRTC/Zoom)
+MSCom -> BD: Guardar Videollamada (estado=SOLICITADA)
+activate BD
+BD --> MSCom: Registro exitoso
+deactivate BD
+
+MSCom -> MSNotif: emitirNotificacion(clienteId, enlace)
+activate MSNotif
+MSNotif -> Cliente: Envía Push/Email: "Únete a la llamada"
+MSNotif --> MSCom: Notificación encolada
+deactivate MSNotif
+
+MSCom --> Web: 201 Created (Enlace generado)
+deactivate MSCom
+Web --> Abogado: Muestra sala de espera activa
+@enduml

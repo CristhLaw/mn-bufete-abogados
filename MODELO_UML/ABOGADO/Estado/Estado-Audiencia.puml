@@ -1,0 +1,17 @@
+@startuml
+hide empty description
+
+[*] --> Programada : Agendar Audiencia (UC1)
+
+Programada --> Reprogramada : Reprogramar (UC2)
+Reprogramada --> Reprogramada : Reprogramar (UC2)
+
+Programada --> Cancelada : Cancelar (UC3)
+Reprogramada --> Cancelada : Cancelar (UC3)
+
+Programada --> Realizada : Se lleva a cabo
+Reprogramada --> Realizada : Se lleva a cabo
+
+Cancelada --> [*]
+Realizada --> [*]
+@enduml

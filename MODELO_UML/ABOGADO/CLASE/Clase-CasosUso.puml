@@ -1,0 +1,49 @@
+@startuml
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Abogado {
+  - idAbogado: UUID
+  - colegiatura: String
+}
+
+class Asistente {
+  - idAsistente: UUID
+  - permisos: List<String>
+}
+
+class CasoLegal {
+  - idCaso: UUID
+  - titulo: String
+  - fechaApertura: Date
+  - estado: EstadoCaso
+  + registrarActuacion(): void
+  + cerrarCaso(): void
+}
+
+class ActuacionProcesal {
+  - idActuacion: UUID
+  - descripcion: String
+  - fechaRegistro: DateTime
+  - registradoPor: UUID
+}
+
+class Resolucion {
+  - idResolucion: UUID
+  - fechaFallo: Date
+  - veredicto: String
+}
+
+enum EstadoCaso {
+  ABIERTO
+  EN_TRAMITE
+  RESUELTO
+  CERRADO
+}
+
+Abogado "1" -- "0..*" CasoLegal : es responsable >
+Asistente "1" -- "0..*" CasoLegal : asiste en >
+CasoLegal "1" *-- "0..*" ActuacionProcesal : contiene >
+CasoLegal "1" -- "0..1" Resolucion : culmina con >
+CasoLegal -> EstadoCaso : tiene >
+@enduml

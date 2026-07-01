@@ -1,0 +1,13 @@
+@startuml
+hide empty description
+
+[*] --> Abierto : Crear Expediente (UC1)
+
+Abierto --> EnTramite : Registrar Actuación Procesal (UC3)
+EnTramite --> EnTramite : Nuevas actuaciones (Abogado/Asistente)
+
+EnTramite --> Resuelto : Registrar Resolución (UC4)
+Resuelto --> Cerrado : Cerrar Caso (UC5)
+
+Cerrado --> [*]
+@enduml
