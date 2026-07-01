@@ -1,0 +1,31 @@
+@startuml
+!theme bluegray
+title AD02: Actividades - Administrar Expedientes (Vista Cliente)
+
+|Cliente|
+start
+:Accede a "Mis Expedientes";
+:Selecciona un expediente específico;
+:Solicita ver detalle;
+
+|#EAF2FB|API Gateway|
+:Valida Token JWT;
+if (¿Token válido?) then (Sí)
+    :Redirige petición al MS Casos Legales;
+    |#D6E4F0|MS Casos Legales|
+    :Consulta datos en DB Casos;
+    :Recupera hitos y estado del expediente;
+    :Retorna objeto JSON al Gateway;
+    
+    |API Gateway|
+    :Envía respuesta al Cliente;
+    |Cliente|
+    :Visualiza detalle del expediente;
+else (No)
+    |API Gateway|
+    :Retorna error de sesión expirada;
+    |Cliente|
+    :Solicita re-autenticación (Redirige a Login);
+endif
+stop
+@enduml

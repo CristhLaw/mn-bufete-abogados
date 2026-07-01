@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+!theme bluegray
+skinparam footerFontColor black
+title Caso de uso "CU02 - Administrar Expedientes"
+
+' =====================================================
+' ACTOR
+' =====================================================
+actor "Cliente" as cliente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral" {
+    usecase "◉\nsize:18CU02\nAdministrar Expedientes" as UC_Expediente
+    usecase "📁\nConsultar Estado" as UC_Consultar
+    usecase "📝\nVer Actuaciones" as UC_Actuaciones
+    usecase "🔑\nAutenticación Requerida" as UC_Auth
+    usecase "⚠\nMostrar Error" as UC_Error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+cliente --> UC_Expediente
+
+' Relaciones de inclusión (Flujo obligatorio)
+UC_Expediente ..> UC_Auth : <<include>>
+UC_Expediente ..> UC_Consultar : <<extend>>
+UC_Expediente ..> UC_Actuaciones : <<extend>>
+
+' Manejo de excepciones
+UC_Error ..> UC_Expediente : <<extend>>
+
+legend right
+|= Símbolo |= Descripción |
+| ◉ | Caso de uso principal |
+| 📁 | Consulta de estado |
+| 📝 | Detalle procesal |
+| 🔑 | Validación obligatoria |
+| ⚠ | Manejo de error |
+endlegend
+
+footer IURIS - LexTech Solutions S.A.C.
+@enduml

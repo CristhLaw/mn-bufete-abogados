@@ -1,0 +1,90 @@
+@startuml
+title Diagrama de Clases - IURIS Buffet Legal
+
+'====================================
+' ENUMS
+' ===================================
+enum EstadoExpediente {
+    EN_PROCESO
+    PENDIENTE_PAGO
+    ARCHIVADO
+    CERRADO
+}
+
+enum TipoDocumento {
+    DEMANDA
+    CONTRATO
+    PRUEBA
+    SENTENCIA
+}
+
+'=================================
+'USUARIOS Y ROLES
+'=================================
+abstract class Usuario {
+    - idUsuario: int
+    - email: String
+    - password: String
+    + login(): boolean
+}
+
+class Cliente {
+    - dniRuc: String
+    - telefono: String
+    + consultarExpediente(): void
+    + subirDocumento(): void
+}
+
+class Abogado {
+    - especialidad: String
+    - numeroColegiatura: String
+    + gestionarExpediente(): void
+    + emitirInforme(): void
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Abogado
+
+'=====================================
+'GESTIÓN LEGAL
+'=====================================
+class Expediente {
+    - idExpediente: int
+    - titulo: String
+    - fechaInicio: Date
+    - estado: EstadoExpediente
+    + actualizarEstado(): void
+    + calcularHonorarios(): double
+}
+
+class Documento {
+    - idDocumento: int
+    - nombre: String
+    - rutaArchivo: String
+    - tipo: TipoDocumento
+    + firmarDigitalmente(): void
+}
+
+class Mensaje {
+    - idMensaje: int
+    - contenido: String
+    - fechaEnvio: DateTime
+}
+
+'=====================================
+'RELACIONES
+'=====================================
+Cliente "1" -- "*" Expediente : posee >
+Abogado "1" -- "*" Expediente : atiende >
+Expediente "1" *-- "*" Documento : contiene
+Expediente "1" o-- "*" Mensaje : intercambia
+
+'Auditoría aplicada a todos los cambios críticos
+class Auditoria {
+    - idAuditoria: int
+    - accion: String
+    - fecha: DateTime
+}
+Expediente --> Auditoria : registra cambios >
+
+@enduml
