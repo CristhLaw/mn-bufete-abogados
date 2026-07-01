@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+!theme bluegray
+skinparam footerFontColor black
+title Caso de uso "CU04 - Canal de Interacción"
+
+' =====================================================
+' ACTORES
+' =====================================================
+actor "Cliente" as cliente
+actor "Abogado" as abogado
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral" {
+    usecase "◉\nsize:18CU04\nCanal de Interacción" as UC_Canal
+    usecase "💬\nEnviar Mensaje" as UC_Mensaje
+    usecase "📎\nAdjuntar Documento" as UC_Adjuntar
+    usecase "🔔\nNotificar Recepción" as UC_Notificar
+    usecase "🔑\nValidar Sesión" as UC_Auth
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+cliente --> UC_Canal
+abogado --> UC_Canal
+
+' Relaciones de inclusión (Flujo obligatorio)
+UC_Canal ..> UC_Auth : <<include>>
+UC_Canal ..> UC_Notificar : <<include>>
+
+' Relaciones de extensión (Opciones específicas)
+UC_Canal <.. UC_Mensaje : <<extend>>
+UC_Canal <.. UC_Adjuntar : <<extend>>
+
+legend right
+|= Símbolo |= Descripción |
+| ◉ | Caso de uso principal |
+| 💬 | Intercambio de texto |
+| 📎 | Envío de archivos |
+| 🔔 | Notificación asíncrona |
+| 🔑 | Validación obligatoria |
+endlegend
+
+footer IURIS - LexTech Solutions S.A.C.
+@enduml

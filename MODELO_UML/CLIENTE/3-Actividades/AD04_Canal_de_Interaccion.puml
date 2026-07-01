@@ -1,0 +1,31 @@
+@startuml
+!theme bluegray
+title AD04: Actividades - Canal de Interacción (Comunicación en Tiempo Real)
+
+|Cliente|
+start
+:Accede a la sala de chat del expediente;
+:Redacta un mensaje o solicita videollamada;
+:Envía solicitud;
+
+|#EAF2FB|API Gateway|
+:Valida Token de sesión;
+
+|#D6E4F0|MS Comunicación|
+:Persiste mensaje en DB Comunicación;
+:Notifica al servidor WebSocket;
+
+fork
+  |WebSocket Server|
+  :Empuja notificación al Abogado;
+  |Abogado|
+  :Recibe mensaje/invitación;
+fork again
+  |MS Comunicación|
+  :Registra evento en Log de Auditoría;
+end fork
+
+|Cliente|
+:Visualiza estado "Enviado";
+stop
+@enduml

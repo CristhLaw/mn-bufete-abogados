@@ -1,0 +1,40 @@
+@startuml
+!theme bluegray
+skinparam responseMessageBelowArrow true
+autonumber
+
+actor "Cliente" as C
+participant "Interfaz (Frontend)" as UI
+participant "API Gateway" as G
+participant "MS Documentos" as S
+participant "Cloudinary (Nube)" as Cloud
+database "DB Documentos" as DB
+
+C -> UI: Selecciona archivo y "Subir"
+UI -> G: POST /api/v1/documentos/upload (Multipart File)
+activate G
+
+G -> S: Validar Token + Archivo
+activate S
+
+S -> S: Validar formato/tamaño (ArchivoValidator)
+alt Archivo Válido
+    S -> Cloud: POST /upload (Stream de datos)
+    activate Cloud
+    Cloud --> S: Retorna PublicID/URL
+    deactivate Cloud
+    
+    S -> DB: Registrar metadatos (ID, URL, Usuario, Fecha)
+    S -> S: Log Auditoría (Evento: CargaExitosa)
+    S --> G: 201 Created (Confirmación)
+    G --> UI: Respuesta de éxito
+    UI --> C: Mostrar "Archivo subido correctamente"
+else Archivo Inválido
+    S --> G: 400 Bad Request
+    G --> UI: Notificar error de validación
+    UI --> C: Mostrar mensaje de error
+end
+deactivate S
+deactivate G
+
+@enduml

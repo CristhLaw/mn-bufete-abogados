@@ -1,0 +1,16 @@
+@startuml
+!theme bluegray
+skinparam sequenceMessageAlign center
+participant "Cliente" as C
+participant "API Gateway" as G
+participant "MS Autenticación" as A
+database "DB Auth" as DB
+
+C -> G: POST /login (credenciales)
+G -> A: Validar credenciales
+A -> DB: Consultar usuario
+DB --> A: Retorna datos
+A -> A: Generar JWT
+A --> G: Retorna Token
+G --> C: 200 OK (Token JWT)
+@enduml

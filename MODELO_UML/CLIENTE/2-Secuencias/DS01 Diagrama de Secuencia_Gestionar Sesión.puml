@@ -1,0 +1,32 @@
+@startuml
+!theme bluegray
+skinparam responseMessageBelowArrow true
+autonumber
+
+actor "Cliente" as C
+participant "Interfaz (Frontend)" as UI
+participant "API Gateway" as G
+participant "MS Casos Legales" as S
+database "DB Casos" as DB
+
+C -> UI: Selecciona "Ver Expediente"
+UI -> G: GET /api/v1/expedientes/{id} (Header: Authorization: Bearer <Token>)
+activate G
+
+G -> G: Validar Token JWT
+alt Token Válido
+    G -> S: GET /expedientes/{id}
+    activate S
+    S -> DB: Consultar datos del caso
+    DB --> S: Retorna información (etapas, abogado, hitos)
+    S --> G: 200 OK (Data JSON)
+    G --> UI: Retorna detalle del expediente
+    UI --> C: Despliega información del caso
+else Token Inválido o Expirado
+    G --> UI: 401 Unauthorized
+    UI --> C: Redirigir a Login
+end
+deactivate S
+deactivate G
+
+@enduml
