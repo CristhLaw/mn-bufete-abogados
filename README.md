@@ -144,6 +144,4 @@ mn-bufete-abogados/
 
 **puma13H**
 
-**obedfernandez** — [https://github.com/obedfernandez](https://github.com/obedfernandez)
-
 Proyecto académico de Ingeniería de Software.
