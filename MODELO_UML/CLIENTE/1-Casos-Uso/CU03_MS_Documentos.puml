@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+!theme bluegray
+skinparam footerFontColor black
+title Caso de uso "CU03 - Gestionar Expedientes"
+
+' =====================================================
+' ACTORES
+' =====================================================
+actor "Abogado" as abogado
+actor "Cliente" as cliente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral" {
+    usecase "◉\nsize:18CU03\nGestionar Expedientes" as UC_Gestion
+    usecase "➕\nCrear Expediente" as UC_Crear
+    usecase "✏\nActualizar Estado" as UC_Actualizar
+    usecase "🔑\nValidar Rol" as UC_Auth
+    usecase "💾\nGuardar Log" as UC_Log
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+abogado --> UC_Gestion
+cliente --> UC_Gestion
+
+' Relaciones de inclusión (Flujo obligatorio)
+UC_Gestion ..> UC_Auth : <<include>>
+UC_Gestion ..> UC_Log : <<include>>
+
+' Relaciones de extensión (Opciones específicas)
+UC_Gestion <.. UC_Crear : <<extend>>
+UC_Gestion <.. UC_Actualizar : <<extend>>
+
+legend right
+|= Símbolo |= Descripción |
+| ◉ | Caso de uso principal |
+| ➕ | Crear nuevo caso |
+| ✏ | Modificar avance |
+| 🔑 | Validación de permisos |
+| 💾 | Auditoría inalterable |
+endlegend
+
+footer IURIS - LexTech Solutions S.A.C.
+@enduml

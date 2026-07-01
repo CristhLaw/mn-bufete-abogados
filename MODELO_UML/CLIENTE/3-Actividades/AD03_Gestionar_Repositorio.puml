@@ -1,0 +1,33 @@
+@startuml
+!theme bluegray
+title AD03: Actividades - Gestionar Repositorio (Carga de Documentos)
+
+|Cliente|
+start
+:Selecciona expediente;
+:Adjunta archivo legal (PDF/DOCX);
+:Presiona botón "Guardar Documento";
+
+|#EAF2FB|API Gateway|
+:Valida Token JWT y permisos;
+
+|#D6E4F0|MS Documentos|
+:Valida formato y tamaño del archivo;
+if (¿Archivo válido?) then (Sí)
+    :Genera nombre único y firma de seguridad;
+    :Transfiere archivo a Cloudinary (Nube);
+    :Registra metadatos en DB Documentos;
+    :Registra evento en Log de Auditoría;
+    
+    |#EAF2FB|API Gateway|
+    :Retorna confirmación 201;
+    |Cliente|
+    :Muestra "Documento subido con éxito";
+else (No)
+    |API Gateway|
+    :Retorna error 400 (Formato inválido);
+    |Cliente|
+    :Muestra error de validación;
+endif
+stop
+@enduml

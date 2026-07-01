@@ -1,0 +1,28 @@
+@startuml
+!theme bluegray
+skinparam responseMessageBelowArrow true
+autonumber
+
+actor "Cliente" as C
+participant "Interfaz (Frontend)" as UI
+participant "API Gateway" as G
+participant "MS Comunicación" as S
+participant "WebSocket Server" as WS
+actor "Abogado" as A
+
+C -> UI: Envía mensaje (Chat)
+UI -> G: POST /api/v1/chat/enviar
+activate G
+
+G -> S: Validar Token + Guardar
+activate S
+S -> S: Persistir mensaje en DB
+S -> WS: Emitir evento "NuevoMensaje"
+deactivate S
+deactivate G
+
+WS -> A: Push Notification / Notificación In-App
+A -> UI: Recibe mensaje en tiempo real
+
+note right of A: La comunicación ocurre en\ntiempo real mediante el canal\nestablecido por WebSockets.
+@enduml

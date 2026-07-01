@@ -1,0 +1,47 @@
+@startuml
+!theme bluegray
+title AD01: Actividades - Gestionar Sesión (Autenticación)
+
+|Cliente|
+start
+:Accede a la página de Login;
+:Ingresa credenciales (usuario/contraseña);
+:Presiona botón "Iniciar Sesión";
+
+|#EAF2FB|API Gateway|
+:Recibe solicitud HTTPS;
+:Redirige petición al MS Autenticación;
+
+|#D6E4F0|MS Autenticación|
+:Verifica existencia de usuario;
+if (¿Usuario registrado?) then (Sí)
+    :Valida hash de contraseña (Bcrypt);
+    if (¿Contraseña correcta?) then (Sí)
+        :Genera Token JWT;
+        :Registra log de auditoría de login;
+        :Retorna Token al Gateway;
+    else (No)
+        :Genera error 401 (Credenciales incorrectas);
+        |API Gateway|
+        :Retorna error al Cliente;
+        |Cliente|
+        :Muestra mensaje de error;
+        stop
+    endif
+else (No)
+    :Genera error 404 (Usuario no encontrado);
+    |API Gateway|
+    :Retorna error al Cliente;
+    |Cliente|
+    :Muestra mensaje de error;
+    stop
+endif
+
+|API Gateway|
+:Retorna Token JWT;
+
+|Cliente|
+:Almacena Token en LocalStorage;
+:Redirige a Dashboard Principal;
+stop
+@enduml

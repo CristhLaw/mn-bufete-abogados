@@ -1,0 +1,23 @@
+@startuml
+!theme bluegray
+title DE01: Ciclo de Vida del Expediente (Perspectiva Cliente)
+
+[*] --> Registrado : Creación del Caso
+
+state "Registrado" as R
+state "En Evaluación" as E
+state "En Proceso" as P
+state "Pendiente de Acción" as PA
+state "Archivado/Cerrado" as C
+
+R --> E : Abogado inicia revisión
+E --> P : Cliente aprueba estrategia
+P --> PA : Se requiere información/pago
+PA --> P : Acción completada por cliente
+P --> C : Sentencia o acuerdo final
+C --> [*] : Cierre administrativo
+
+note right of P : Durante este estado, el Cliente\npuede usar el Canal de Interacción (CU04)
+note left of PA : Requiere atención inmediata del Cliente
+
+@enduml
