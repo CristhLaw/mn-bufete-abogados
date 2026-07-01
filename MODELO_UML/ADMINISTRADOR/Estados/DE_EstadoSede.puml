@@ -1,0 +1,20 @@
+﻿@startuml
+title Diagrama de Estados - Sede del Bufete (RN-08)
+
+[*] --> Habilitada : Administrador registra Sede
+
+state Habilitada {
+  Habilitada : Sede operativa
+  Habilitada : Se pueden asignar casos y abogados
+}
+
+Habilitada --> Mantenimiento : Bloqueo temporal
+Mantenimiento --> Habilitada : Reapertura
+Habilitada --> Inactiva : Cierre administrativo definitivo
+Inactiva --> [*]
+
+note right of Habilitada
+  SedeValidator valida el estado
+  antes de cada asignación (RN-07)
+end note
+@enduml

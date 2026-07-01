@@ -1,0 +1,25 @@
+﻿@startuml
+title Diagrama de Secuencia - Administrador actualiza Permisos (RN-05)
+autonumber
+
+actor Administrador
+participant "WebApp" as UI
+participant "API Gateway" as GW
+participant "MS Usuarios" as MSUsers
+participant "RolManager" as Manager
+database "DB Usuarios" as DB
+
+Administrador -> UI : Modificar permisos del rol 'Abogado'
+UI -> GW : PUT /api/v1/roles/{id}/permisos (JWT Admin)
+GW -> GW : Validar token Admin (RN-03)
+GW -> MSUsers : Enviar solicitud de cambio
+
+MSUsers -> Manager : procesarActualizacionPermisos()
+Manager -> DB : UPDATE rol_permiso SET ...
+DB --> Manager : OK
+Manager --> MSUsers : confirmacion
+
+MSUsers --> GW : 200 OK (Rol Actualizado)
+GW --> UI : Notificar éxito
+UI --> Administrador : Muestra "Permisos actualizados correctamente"
+@enduml

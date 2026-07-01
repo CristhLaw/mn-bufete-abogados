@@ -1,0 +1,17 @@
+﻿@startuml
+title Diagrama de Estados - Cuenta de Usuario
+
+[*] --> Pendiente : Registro inicial
+
+Pendiente --> Activo : Email verificado
+Activo --> Suspendido : Administrador inhabilita acceso
+Suspendido --> Activo : Reactivación
+Activo --> Eliminado : Baja del sistema (Eliminación lógica)
+Suspendido --> Eliminado
+Eliminado --> [*]
+
+note left of Suspendido
+  Usuario no puede generar
+  tokens JWT en MS Auth
+end note
+@enduml

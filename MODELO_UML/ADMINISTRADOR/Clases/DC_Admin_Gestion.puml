@@ -1,0 +1,48 @@
+﻿@startuml
+title Diagrama de Clases - Administración IURIS
+
+class Administrador {
+    - id: Long
+    - nivelAcceso: Integer
+    + gestionarUsuarios()
+    + gestionarRoles()
+    + gestionarSedes()
+    + configurarSistema()
+    + auditarDocumentos()
+}
+
+class Usuario {
+    - uuid: String
+    - email: String
+    - rol: Rol
+    - estado: String
+}
+
+class Rol {
+    - nombre: String
+    - permisos: List<Permiso>
+}
+
+class Permiso {
+    - accion: String
+    - descripcion: String
+}
+
+class Sede {
+    - nombre: String
+    - direccion: String
+    - activa: Boolean
+}
+
+class Auditoria {
+    - usuarioEmail: String
+    - accion: String
+    - fechaHora: DateTime
+}
+
+Administrador "1" -- "N" Usuario : gestiona >
+Administrador "1" -- "N" Rol : define >
+Administrador "1" -- "N" Sede : configura >
+Rol "N" *-- "N" Permiso : contiene
+Administrador ..> Auditoria : consulta >
+@enduml
