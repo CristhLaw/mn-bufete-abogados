@@ -1,0 +1,19 @@
+﻿@startuml
+title Diagrama de Secuencia - Administrador consulta Auditoría Documentos (RN-20)
+autonumber
+
+actor Administrador
+participant "WebApp" as UI
+participant "MS Documentos" as MSDocs
+participant "AuditoriaAccesoService" as Audit
+database "DB Documentos" as DB
+
+Administrador -> UI : Solicitar log de accesos a documentos
+UI -> MSDocs : GET /documents/audit (Filtros: fecha/usuario)
+MSDocs -> Audit : obtenerHistorial(filtros)
+Audit -> DB : SELECT FROM logs_auditoria
+DB --> Audit : lista de registros
+Audit --> MSDocs : registros formateados
+MSDocs --> UI : 200 OK (Data Log)
+UI --> Administrador : Desplegar tabla de trazabilidad
+@enduml
