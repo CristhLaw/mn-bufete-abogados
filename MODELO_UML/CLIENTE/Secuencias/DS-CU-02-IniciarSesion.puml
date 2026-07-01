@@ -1,0 +1,58 @@
+﻿@startuml
+title Diagrama de Secuencia (DS-CU-02) : Iniciar Sesion (IURIS - Arquitectura MS)
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+
+actor Cliente as C
+boundary "Frontend\n(Web/Flutter)" as UI
+box "Infraestructura API" #LightBlue
+    control "API Gateway" as GW
+end box
+box "MS Autenticacion" #LightCyan
+    control "AuthController" as Controller
+    entity "AuthService" as Srv
+    entity "JWTProvider" as JWT
+    database "DB_Auth" as DB
+end box
+
+C -> UI: 1. Ingresa Correo y Contrasena
+activate UI
+UI -> GW: 2. POST /auth/login {correo, password}
+activate GW
+
+GW -> Controller: 3. Enruta peticion de Login
+activate Controller
+
+Controller -> Srv: 4. validaCredenciales(correo, password)
+activate Srv
+
+Srv -> DB: 5. Consulta credenciales y estado
+activate DB
+DB --> Srv: 6. Hash de password + datos
+deactivate DB
+
+alt Si contrasena NO coincide (o usuario no existe)
+    Srv --> Controller: Error 401 Unauthorized
+    Controller --> GW: Error 401
+    GW --> UI: Devuelve Error
+    UI --> C: 7a. Muestra alerta de acceso denegado
+else Si contrasena SI coincide
+    Srv -> JWT: 7. Generar JWT (Roles)
+    activate JWT
+    JWT --> Srv: 8. Token RS256 generado
+    deactivate JWT
+    
+    Srv --> Controller: Return Token JWT
+    Controller --> GW: Responde Status 200 { token }
+    GW --> UI: Devuelve JWT
+    
+    UI -> UI: 9. Guarda JWT localmente
+    UI --> C: 10. Redirige a Dashboard
+end
+
+deactivate Srv
+deactivate Controller
+deactivate GW
+deactivate UI
+
+@enduml

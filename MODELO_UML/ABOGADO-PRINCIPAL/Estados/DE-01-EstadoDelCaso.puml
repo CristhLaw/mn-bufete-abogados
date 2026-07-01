@@ -1,0 +1,32 @@
+﻿@startuml
+title Diagrama de Estados - Ciclo de Vida del Caso Legal (RN-09)
+skinparam ArrowColor #2C3E50
+skinparam StateBackgroundColor #ECF0F1
+skinparam StateBorderColor #2C3E50
+
+note "Inicio del Caso \n(CU-AB-04 Crear Expediente)" as N1
+[*] --> Activo 
+
+state Activo {
+  Activo : El abogado revisa o \nactualiza expedientes
+}
+N1 .. Activo
+
+Activo --> En_Audiencia : Programar y Asistir a Audiencia
+En_Audiencia --> Activo : Concluye audiencia sin resolución
+
+Activo --> En_Espera : Faltan doc/evidencias
+En_Espera --> Activo : Cliente sube documentos
+En_Espera --> En_Audiencia : Audiencia urgente convocada
+
+Activo --> Cerrado : Registrar Resolución Definitiva (CU-AB-11)
+En_Audiencia --> Cerrado : Se dicta resolución en audiencia
+
+state Cerrado {
+  Cerrado : Notificación generada al cliente \nEsperando archivamiento
+}
+
+Cerrado --> Archivado : Tras 30 días o guarda física
+Archivado --> [*]
+
+@enduml
