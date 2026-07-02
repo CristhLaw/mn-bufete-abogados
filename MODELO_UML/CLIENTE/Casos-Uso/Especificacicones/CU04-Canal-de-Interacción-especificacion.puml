@@ -1,0 +1,35 @@
+@startjson
+{
+  "Caso de uso": "Canal de Interacción",
+  "Id": "CU04",
+  "Breve descripción": "Permite la comunicación bidireccional, síncrona y asíncrona entre el Cliente y el Abogado, centralizando el intercambio de mensajes y la gestión de sesiones de videollamada para consultas legales.",
+  "Actores primarios": "Cliente, Abogado",
+  "Actores secundarios": "MS Comunicación, Servicio de Videollamadas (WebRTC)",
+  "Precondiciones": [
+    "El usuario (Cliente o Abogado) ha iniciado sesión (CU01).",
+    "Existe un caso o expediente activo entre ambas partes.",
+    "El MS Comunicación está activo y disponible."
+  ],
+  "Flujo principal": {
+    "1": "El usuario accede al módulo de 'Canal de Interacción' desde el detalle de un expediente.",
+    "2": "El sistema recupera el historial de mensajes y el estado de la comunicación.",
+    "3": "El usuario elige entre 'Enviar mensaje' o 'Iniciar videollamada'.",
+    "4": "Si es mensaje, el sistema lo persiste en DB Comunicación y notifica vía WebSocket al receptor.",
+    "5": "Si es videollamada, el sistema genera una sala segura y envía una invitación al receptor.",
+    "6": "El sistema registra el inicio de la interacción en el log de auditoría."
+  },
+  "Postcondiciones": [
+    "El mensaje es visible para ambas partes en tiempo real.",
+    "Se mantiene el historial de la conversación vinculado al ID del expediente."
+  ],
+  "Flujos alternativos": {
+    "A1: Receptor desconectado": "El sistema almacena el mensaje y lo marca como 'Pendiente' hasta que el usuario se conecte.",
+    "A2: Error en WebRTC": "Si la videollamada falla, el sistema notifica al usuario y sugiere intentar vía chat."
+  },
+  "Reglas de negocio": [
+    "RN-COM-01: Los mensajes deben ser cifrados en tránsito (TLS/SSL).",
+    "RN-COM-02: Todas las videollamadas deben iniciarse dentro de un contexto de expediente validado."
+  ]
+}
+
+@endjson

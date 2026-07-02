@@ -1,0 +1,32 @@
+@startjson
+{
+  "Caso de uso": "Gestionar Sesión",
+  "Id": "CU01",
+  "Breve descripción": "Permite a los actores (Cliente/Abogado) iniciar y cerrar sesión de forma segura en la plataforma IURIS mediante validación de credenciales contra el MS Autenticación.",
+  "Actores primarios": "Cliente, Abogado",
+  "Precondiciones": [
+    "El usuario debe estar registrado en la base de datos de usuarios.",
+    "El MS Autenticación debe estar operativo."
+  ],
+  "Flujo principal": {
+    "1": "El usuario ingresa sus credenciales (usuario/email y contraseña) en la interfaz de login.",
+    "2": "El sistema envía una petición segura (HTTPS) al MS Autenticación.",
+    "3": "El sistema valida las credenciales y verifica el estado de la cuenta.",
+    "4": "El sistema genera un Token JWT (JSON Web Token) con los claims correspondientes.",
+    "5": "El sistema redirige al usuario al Dashboard principal y almacena el token en el cliente (Local Storage/Session Storage)."
+  },
+  "Postcondiciones": [
+    "Se crea una sesión activa para el usuario.",
+    "Se registra el evento de inicio de sesión en el log de auditoría del sistema."
+  ],
+  "Flujos alternativos": {
+    "A1: Credenciales inválidas": "El sistema muestra un mensaje de error: 'Credenciales incorrectas' y no permite el acceso.",
+    "A2: Cuenta bloqueada": "El sistema deniega el acceso e informa al usuario que debe contactar al administrador del bufete.",
+    "A3: Cierre de sesión": "El usuario selecciona 'Cerrar Sesión', el sistema invalida el token JWT en el cliente y redirige a la pantalla de login."
+  },
+  "Reglas de negocio": [
+    "RN-SEC-01: Las contraseñas deben ser almacenadas utilizando hashing (bcrypt o superior).",
+    "RN-SEC-02: Los tokens JWT deben tener un tiempo de expiración configurado (ej. 1 hora)."
+  ]
+}
+@endjson

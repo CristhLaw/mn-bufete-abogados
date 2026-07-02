@@ -1,0 +1,47 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+skinparam usecase {
+    BackgroundColor White
+    BorderColor #2E5D8E
+    ArrowColor #1B2A4A
+}
+
+title <size:20><b>Caso de uso "CU01 - Gestionar Sesión"</b></size>
+
+' ACTORES
+actor "Cliente" as cliente
+actor "Abogado" as abogado
+actor "Administrador" as admin
+
+' SISTEMA
+rectangle "IURIS - Sistema Integral" {
+    usecase "◉\n<size:18><b>CU01</b></size>\nGestionar Sesión" as UC_Sesion
+    usecase "🔑\nValidar Credenciales" as UC_Validar
+    usecase "🔐\nGenerar Token JWT" as UC_JWT
+    usecase "⚠\nMostrar Error de Acceso" as UC_Error
+}
+
+' RELACIONES
+cliente --> UC_Sesion
+abogado --> UC_Sesion
+admin --> UC_Sesion
+
+UC_Sesion ..> UC_Validar : <<include>>
+UC_Sesion ..> UC_JWT : <<include>>
+UC_Error ..> UC_Sesion : <<extend>>
+
+legend right
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+| ◉ | Caso de uso principal |
+| 🔑 | Validación de credenciales |
+| 🔐 | Emisión de Token JWT |
+| ⚠ | Flujo alternativo (Error) |
+endlegend
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+endfooter
+@enduml

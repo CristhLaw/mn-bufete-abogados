@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Gestionar Agenda",
+  "Id": "CU-04",
+  "Breve descripción": "El abogado o secretaria programa audiencias, citas y reuniones, validando la disponibilidad de las partes involucradas.",
+  "Actores primarios": "Abogado, Secretaria",
+  "Actores secundarios": "MS Agenda, MS Comunicación (notificaciones)",
+  "Precondiciones": [
+    "El usuario tiene una sesión activa.",
+    "El caso legal asociado al evento existe."
+  ],
+  "Flujo principal": {
+    "1": "El usuario accede al calendario dentro del sistema.",
+    "2": "Selecciona una fecha y hora para una nueva audiencia o cita.",
+    "3": "El sistema (DisponibilidadValidator) revisa posibles conflictos de agenda.",
+    "4": "El usuario confirma la programación.",
+    "5": "El sistema guarda el registro en la DB Agenda.",
+    "6": "El sistema dispara eventos de notificación (RecordatorioScheduler) a los participantes."
+  },
+  "Postcondiciones": [
+    "El evento queda registrado en el calendario central.",
+    "Las partes involucradas reciben un recordatorio automático."
+  ],
+  "Flujos alternativos": {
+    "A1: Conflicto de horario": "El sistema impide la programación y sugiere rangos de disponibilidad.",
+    "A2: Plazo menor a 24h": "El sistema marca la cita como 'Urgente' bajo validación del abogado."
+  }
+}
+@endjson

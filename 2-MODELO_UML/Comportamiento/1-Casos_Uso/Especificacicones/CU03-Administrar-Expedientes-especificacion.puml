@@ -1,0 +1,29 @@
+@startjson
+{
+  "Caso de uso": "Administrar Expedientes",
+  "Id": "CU-03",
+  "Breve descripción": "El abogado gestiona el ciclo de vida del expediente legal, desde su apertura, asignación de responsables y registro de actuaciones procesales, hasta su cierre.",
+  "Actores primarios": "Abogado Principal, Abogado Asistente",
+  "Actores secundarios": "MS Casos Legales, Base de Datos de Casos",
+  "Precondiciones": [
+    "El usuario tiene una sesión activa y permisos de abogado.",
+    "El cliente está registrado en el sistema."
+  ],
+  "Flujo principal": {
+    "1": "El abogado accede al módulo de expedientes.",
+    "2": "Solicita la apertura de un nuevo caso legal ingresando los datos del cliente y especialidad.",
+    "3": "El sistema (CasoService) valida la especialidad y asigna automáticamente al abogado según carga laboral.",
+    "4": "El abogado registra las actuaciones procesales a medida que avanza el caso.",
+    "5": "El sistema (EstadoCasoMachine) gestiona las transiciones de estado del caso (Activo, En Audiencia, Cerrado).",
+    "6": "El sistema persiste la información y notifica al cliente sobre cambios de estado."
+  },
+  "Postcondiciones": [
+    "El expediente queda creado y trazable en el sistema.",
+    "Las actuaciones procesales quedan registradas con historial de usuario y fecha."
+  ],
+  "Flujos alternativos": {
+    "A1: Exceso de carga": "El sistema alerta si el abogado asignado supera los 20 casos activos.",
+    "A2: Transición no permitida": "El sistema bloquea el cambio de estado si no se cumplen requisitos (ej. falta de firma)."
+  }
+}
+@endjson

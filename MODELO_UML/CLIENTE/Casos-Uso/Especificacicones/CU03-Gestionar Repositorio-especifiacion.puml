@@ -1,0 +1,36 @@
+@startjson
+
+{
+  "Caso de uso": "Gestionar Repositorio",
+  "Id": "CU03",
+  "Breve descripción": "Permite al abogado y al cliente la carga, clasificación, consulta y descarga de archivos y evidencias legales vinculadas a un expediente específico, garantizando trazabilidad y seguridad.",
+  "Actores primarios": "Abogado, Cliente",
+  "Actores secundarios": "Cloudinary (Servicio de almacenamiento en nube), Sistema de Auditoría",
+  "Precondiciones": [
+    "El usuario ha iniciado sesión exitosamente (CU01).",
+    "Existe un expediente legal activo vinculado al caso.",
+    "El usuario tiene los permisos necesarios (escritura para carga, lectura para descarga)."
+  ],
+  "Flujo principal": {
+    "1": "El usuario selecciona el expediente y accede a la sección 'Documentos'.",
+    "2": "El usuario selecciona 'Cargar Nuevo Documento' y adjunta el archivo.",
+    "3": "El sistema (ArchivoValidator) valida el formato (PDF, DOCX, etc.) y tamaño.",
+    "4": "El sistema (CloudinaryAdapter) transmite el archivo al almacenamiento en nube.",
+    "5": "El sistema (DocumentoRepository) persiste los metadatos y la URL firmada en la base de datos.",
+    "6": "El sistema (AuditoriaAccesoService) registra el evento en el log de auditoría."
+  },
+  "Postcondiciones": [
+    "El documento es accesible mediante una URL segura.",
+    "Se garantiza la inalterabilidad mediante el registro de auditoría en el MS Documentos."
+  ],
+  "Flujos alternativos": {
+    "A1: Formato o tamaño inválido": "El sistema rechaza el archivo y muestra una alerta: 'Formato no permitido o tamaño excesivo'.",
+    "A2: Error de conexión con Cloudinary": "El sistema revierte la operación y notifica al usuario: 'Error al subir archivo, intente nuevamente'.",
+    "A3: Acceso no autorizado": "Si el cliente intenta descargar un documento privado del abogado, el sistema deniega el acceso."
+  },
+  "Reglas de negocio": [
+    "RN-DOC-01: Solo se permiten formatos de archivo autorizados (PDF, DOCX, JPG, PNG, MP4).",
+    "RN-DOC-02: Todos los accesos (lectura/escritura) deben ser registrados con marca de tiempo y usuario responsable."
+  ]
+}
+@endjson

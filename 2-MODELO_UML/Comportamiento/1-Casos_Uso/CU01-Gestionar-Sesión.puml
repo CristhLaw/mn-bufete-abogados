@@ -1,0 +1,74 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU02 - Gestionar Perfil y Roles"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+
+actor "Administrador" as admin
+
+' =====================================================
+' SISTEMA
+' =====================================================
+
+rectangle "IURIS - Sistema Integral"{
+
+    usecase "◉\n<size:18><b>CU02</b></size>\nGestionar Perfil\ny Roles" as UC_Perfil
+
+    usecase "🔐\nAutenticar Usuario" as UC_Auth
+    usecase "📋\nActualizar\ndatos de perfil" as UC_Actualizar
+    usecase "⚙\nAsignar\nroles/permisos" as UC_Roles
+    usecase "⚠\nMostrar\nMensaje de error" as UC_error
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+
+admin --> UC_Perfil : Accede
+
+UC_Perfil .> UC_Auth : <<include>>
+UC_Perfil .> UC_Actualizar : <<include>>
+UC_Perfil .> UC_Roles : <<include>>
+
+UC_error .> UC_Perfil : <<extend>>
+
+' =====================================================
+' LEYENDA PROFESIONAL
+' =====================================================
+
+legend right
+|= <b><size:14>LEYENDA GENERAL</size></b> |= |
+
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+
+| ◉ | Caso de uso principal |
+| 🔐 | Verificación de identidad |
+| 📋 | Mantenimiento de información |
+| ⚙ | Configuración de accesos |
+| ⚠ | Flujo alternativo de error |
+
+|= <b>Relación</b> |= <b>Significado</b> |
+
+| ─────► | Asociación actor → caso de uso |
+| · · · ► | Dependencia UML |
+| <<include>> | Flujo obligatorio |
+| <<extend>> | Flujo alternativo/excepcional |
+
+endlegend
+
+' =====================================================
+' FOOTER
+' =====================================================
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+Diagramas UML - Casos de Uso
+PlantUML %version()
+endfooter
+
+@enduml
