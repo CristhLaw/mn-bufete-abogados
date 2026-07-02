@@ -1,0 +1,32 @@
+@startuml CU-AB-08-subir-documentos-legales-secuencia
+
+actor "Abogado Principal" as AB
+participant "DocumentoController" as CTRL
+participant "CloudinaryAdapter" as CLOUD
+database "BD Documentos" as DB
+
+AB -> CTRL : subirDocumento(casoId, archivo)
+activate CTRL
+
+alt tamaño de archivo dentro del límite
+  CTRL -> CLOUD : almacenar(archivo)
+  activate CLOUD
+  alt subida exitosa
+    CLOUD --> CTRL : url almacenamiento
+    deactivate CLOUD
+    CTRL -> DB : persistir(documento, url, casoId)
+    activate DB
+    DB --> CTRL : confirmación
+    deactivate DB
+    CTRL --> AB : 201 Created
+  else error en Cloudinary
+    CLOUD --> CTRL : error de subida
+    CTRL --> AB : 502 Bad Gateway\n(invita a reintentar)
+  end
+else archivo supera el límite
+  CTRL --> AB : 413 Payload Too Large
+end
+
+deactivate CTRL
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml CU-AB-13-comunicarse-cliente
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+actor "Cliente" as CLIENTE
+
+rectangle "MS Comunicación" {
+  usecase "CU-AB-13\nComunicarse con el Cliente\n(Chat / Videollamada)" as CU13
+}
+
+AB --> CU13
+CLIENTE --> CU13
+
+note right of CU13
+  ChatController /
+  VideollamadaService
+end note
+
+@enduml

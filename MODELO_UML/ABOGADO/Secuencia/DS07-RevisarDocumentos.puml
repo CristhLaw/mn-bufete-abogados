@@ -1,0 +1,32 @@
+@startuml CU-AB-07-revisar-documentos-secuencia
+
+actor "Abogado Principal" as AB
+participant "DocumentoController" as CTRL
+participant "CloudinaryAdapter" as CLOUD
+database "BD Documentos" as DB
+
+AB -> CTRL : listarDocumentos(casoId)
+activate CTRL
+CTRL -> DB : buscarPorCaso(casoId)
+activate DB
+DB --> CTRL : listaDocumentos
+deactivate DB
+CTRL --> AB : documentos del caso
+deactivate CTRL
+
+AB -> CTRL : descargarDocumento(documentoId)
+activate CTRL
+CTRL -> DB : buscarPorId(documentoId)
+activate DB
+DB --> CTRL : metadatos, url
+deactivate DB
+
+CTRL -> CLOUD : obtener(url)
+activate CLOUD
+CLOUD --> CTRL : archivo (binario)
+deactivate CLOUD
+
+CTRL --> AB : documento descargado
+deactivate CTRL
+
+@enduml

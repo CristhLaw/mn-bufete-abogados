@@ -1,0 +1,21 @@
+@startuml CU-AB-03-ver-casos-asignados
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Casos Legales" {
+  usecase "CU-AB-03\nVer Casos Asignados" as CU03
+}
+
+AB --> CU03
+
+note right of CU03
+  RN-11: máximo 20 casos
+  activos simultáneos
+  (AsignacionAbogadoService)
+end note
+
+@enduml

@@ -1,0 +1,31 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-12",
+  "Nombre": "Cerrar Caso",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales, EstadoCasoMachine, MS Comunicacion",
+  "Descripcion": "El sistema permite al Abogado Principal cerrar un caso legal transicionando a estado Cerrado.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Caso esta en estado Activo o En Audiencia",
+    "Se ha registrado la resolucion"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a los detalles del caso",
+    "Abogado selecciona Cerrar Caso",
+    "Sistema valida requisitos de cierre",
+    "Sistema muestra confirmacion",
+    "Abogado puede agregar notas",
+    "Abogado confirma el cierre",
+    "Sistema transiciona al estado Cerrado",
+    "Sistema registra fecha y hora",
+    "MS Comunicacion notifica cliente"
+  ],
+  "Postcondiciones": [
+    "Caso esta en estado Cerrado",
+    "Cliente notificado del cierre",
+    "Abogado recupera capacidad"
+  ]
+}
+@endjson

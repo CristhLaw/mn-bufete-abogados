@@ -1,0 +1,38 @@
+@startuml CU-AB-13-comunicarse-cliente-secuencia
+
+actor "Abogado Principal" as AB
+actor "Cliente" as CLI
+participant "ChatController" as CHATC
+participant "VideollamadaService" as VIDEO
+database "BD Comunicación" as DB
+
+alt comunicación por chat
+  AB -> CHATC : enviarMensaje(casoId, contenido)
+  activate CHATC
+  CHATC -> DB : persistir(mensaje)
+  activate DB
+  DB --> CHATC : confirmación
+  deactivate DB
+  CHATC --> CLI : notificación de nuevo mensaje
+  CHATC --> AB : 200 OK
+  deactivate CHATC
+else comunicación por videollamada
+  AB -> VIDEO : iniciar(casoId, clienteId)
+  activate VIDEO
+  VIDEO -> DB : persistir(videollamada, estado=EN_CURSO)
+  activate DB
+  DB --> VIDEO : confirmación
+  deactivate DB
+  VIDEO --> CLI : invitación a videollamada
+  VIDEO --> AB : enlace de la llamada
+  ...videollamada en curso...
+  AB -> VIDEO : finalizar()
+  VIDEO -> DB : actualizarEstado(FINALIZADA)
+  activate DB
+  DB --> VIDEO : confirmación
+  deactivate DB
+  VIDEO --> AB : 200 OK (llamada finalizada)
+  deactivate VIDEO
+end
+
+@enduml

@@ -1,0 +1,28 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-01",
+  "Nombre": "Iniciar Sesion",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Autenticacion",
+  "Descripcion": "El sistema permite al Abogado Principal autenticarse en la aplicacion usando credenciales, obteniendo un token JWT para acceder a todas las funcionalidades del sistema.",
+  "Precondiciones": [
+    "El Abogado Principal esta registrado en el sistema",
+    "Las credenciales estan correctamente almacenadas en BD",
+    "El MS Autenticacion esta operativo"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a pantalla de login",
+    "Ingresa correo electronico",
+    "Ingresa contrasena",
+    "Sistema valida formato",
+    "Sistema verifica usuario y contrasena",
+    "Sistema genera token JWT",
+    "Sistema retorna token"
+  ],
+  "Postcondiciones": [
+    "La sesion del Abogado esta activa",
+    "El token JWT se almacena en el cliente",
+    "El Abogado puede acceder a todas las funcionalidades"
+  ]
+}
+@endjson

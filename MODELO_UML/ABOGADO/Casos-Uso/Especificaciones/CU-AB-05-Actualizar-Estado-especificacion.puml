@@ -1,0 +1,30 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-05",
+  "Nombre": "Actualizar Estado de Caso",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales, EstadoCasoMachine, MS Comunicacion",
+  "Descripcion": "El sistema permite al Abogado Principal cambiar estado de caso legal siguiendo ciclo: Activo - En Audiencia - En Espera - Cerrado - Archivado.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Estado actual es valido",
+    "Transicion permitida"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a detalles del caso",
+    "Abogado selecciona Cambiar Estado",
+    "Sistema presenta estados permitidos",
+    "Abogado selecciona nuevo estado",
+    "Abogado ingresa comentario opcional",
+    "Sistema valida transicion",
+    "Sistema actualiza estado",
+    "MS Comunicacion notifica cliente"
+  ],
+  "Postcondiciones": [
+    "Estado actualizado correctamente",
+    "Cliente notificado del cambio",
+    "Historial refleja transicion"
+  ]
+}
+@endjson

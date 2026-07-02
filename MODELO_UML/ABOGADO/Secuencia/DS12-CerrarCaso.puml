@@ -1,0 +1,29 @@
+@startuml CU-AB-12-cerrar-caso-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "EstadoCasoMachine" as MACHINE
+database "BD Casos" as DB
+
+AB -> CTRL : cerrarCaso(casoId)
+activate CTRL
+
+CTRL -> MACHINE : validarTransicion(estadoActual, CERRADO)
+activate MACHINE
+
+alt caso tiene resolución registrada (CU-AB-11)
+  MACHINE --> CTRL : transición permitida
+  CTRL -> DB : actualizarEstado(casoId, CERRADO)
+  activate DB
+  DB --> CTRL : confirmación
+  deactivate DB
+  CTRL --> AB : 200 OK (caso cerrado)
+else caso sin resolución registrada
+  MACHINE --> CTRL : transición no permitida
+  CTRL --> AB : 400 Bad Request\n(requiere resolución previa)
+end
+
+deactivate MACHINE
+deactivate CTRL
+
+@enduml

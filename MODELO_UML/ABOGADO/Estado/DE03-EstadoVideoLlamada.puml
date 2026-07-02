@@ -1,0 +1,32 @@
+@startuml Abogado-Estado-Videollamada
+
+title Ciclo de Vida de Videollamada
+
+[*] --> PROGRAMADA : agendar videollamada\n(CU-AB-13, dentro de\nGestionar Citas CU-AB-09)
+
+PROGRAMADA --> EN_CURSO : VideollamadaService.iniciar()
+PROGRAMADA --> CANCELADA : abogado o cliente\ncancela antes de iniciar
+
+EN_CURSO --> FINALIZADA : VideollamadaService.finalizar()
+EN_CURSO --> INTERRUMPIDA : falla de conexión\no cierre abrupto
+
+FINALIZADA --> [*]
+CANCELADA --> [*]
+INTERRUMPIDA --> [*]
+
+note right of PROGRAMADA
+  Vinculada a un Caso
+  y a una CitaAudiencia
+end note
+
+note right of EN_CURSO
+  MS Comunicación:
+  VideollamadaService
+end note
+
+note right of INTERRUMPIDA
+  Puede reintentarse
+  generando nueva PROGRAMADA
+end note
+
+@enduml

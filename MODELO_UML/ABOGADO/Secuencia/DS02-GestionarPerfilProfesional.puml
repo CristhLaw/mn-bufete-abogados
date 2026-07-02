@@ -1,0 +1,41 @@
+@startuml CU-AB-02-gestionar-perfil-profesional-secuencia
+
+actor "Abogado Principal" as AB
+participant "PerfilController" as CTRL
+participant "UsuarioService" as SVC
+database "BD Usuarios" as DB
+
+AB -> CTRL : verPerfil()
+activate CTRL
+CTRL -> SVC : obtenerPerfil(abogadoId)
+activate SVC
+SVC -> DB : buscarPorId(abogadoId)
+activate DB
+DB --> SVC : datosPerfil
+deactivate DB
+SVC --> CTRL : perfil
+CTRL --> AB : datos del perfil
+deactivate SVC
+deactivate CTRL
+
+AB -> CTRL : actualizarPerfil(datos, especialidad)
+activate CTRL
+CTRL -> SVC : actualizar(abogadoId, datos)
+activate SVC
+
+alt datos válidos
+  SVC -> DB : guardar(datos)
+  activate DB
+  DB --> SVC : confirmación
+  deactivate DB
+  SVC --> CTRL : perfil actualizado
+  CTRL --> AB : 200 OK
+else datos inválidos
+  SVC --> CTRL : error de validación
+  CTRL --> AB : 400 Bad Request
+end
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

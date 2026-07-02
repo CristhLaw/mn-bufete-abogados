@@ -1,0 +1,28 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-03",
+  "Nombre": "Ver Casos Asignados",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales",
+  "Descripcion": "El sistema permite al Abogado Principal consultar la lista completa de casos asignados, visualizando estado, cliente, fecha de apertura y especialidad legal.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Existen casos asignados en BD",
+    "MS Casos Legales esta operativo",
+    "Abogado no excede limite de 20 casos activos"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a modulo Mis Casos",
+    "Sistema consulta casos asignados",
+    "Sistema recupera expediente, estado, cliente, rama",
+    "Sistema filtra estado Activo",
+    "Listado ordenado por fecha",
+    "Abogado puede seleccionar caso"
+  ],
+  "Postcondiciones": [
+    "Listado cargado exitosamente",
+    "Abogado visualiza solo sus casos",
+    "Se respeta limite de 20 casos"
+  ]
+}
+@endjson

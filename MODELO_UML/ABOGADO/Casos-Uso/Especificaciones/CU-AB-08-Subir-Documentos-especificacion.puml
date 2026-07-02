@@ -1,0 +1,31 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-08",
+  "Nombre": "Subir Documentos Legales",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Documentos, CloudinaryAdapter, ArchivoValidator",
+  "Descripcion": "El sistema permite al Abogado Principal cargar nuevos documentos legales validando formato y tamanio.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Archivo existe localmente",
+    "Cloudinary esta operativo"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede seccion Documentos",
+    "Abogado selecciona Subir Nuevo Documento",
+    "Se abre dialogo de seleccion",
+    "Abogado selecciona archivo",
+    "Sistema valida formato y tamanio",
+    "Abogado ingresa metadatos",
+    "Abogado confirma carga",
+    "Sistema envia archivo a Cloudinary",
+    "Sistema registra metadatos en BD"
+  ],
+  "Postcondiciones": [
+    "Documento subido a Cloudinary",
+    "Registrado en BD",
+    "Accesible por usuarios autorizados"
+  ]
+}
+@endjson

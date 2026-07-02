@@ -1,0 +1,21 @@
+@startuml CU-AB-04-crear-expediente
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Casos Legales" {
+  usecase "CU-AB-04\nCrear Expediente" as CU04
+}
+
+AB --> CU04
+
+note right of CU04
+  CasoController
+  crea y da seguimiento
+  al expediente legal
+end note
+
+@enduml

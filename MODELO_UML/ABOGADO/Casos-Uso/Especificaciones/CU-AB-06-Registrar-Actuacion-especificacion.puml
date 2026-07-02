@@ -1,0 +1,30 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-06",
+  "Nombre": "Registrar Actuacion Procesal",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales, ActuacionProcesalService",
+  "Descripcion": "El sistema permite al Abogado Principal registrar cada accion procesal formando el historial completo del expediente.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Tipo de actuacion es valido"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a Historial del Caso",
+    "Abogado selecciona Nueva Actuacion",
+    "Sistema muestra formulario",
+    "Abogado selecciona tipo de actuacion",
+    "Abogado ingresa fecha",
+    "Abogado escribe descripcion",
+    "Abogado adjunta documentos",
+    "Abogado confirma registro",
+    "Sistema persiste en BD"
+  ],
+  "Postcondiciones": [
+    "Actuacion registrada exitosamente",
+    "Historial actualizado cronologicamente",
+    "Log de auditoria registrado"
+  ]
+}
+@endjson

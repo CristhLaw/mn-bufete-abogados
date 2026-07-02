@@ -1,0 +1,27 @@
+@startuml CU-AB-10-generar-reportes-casos-secuencia
+
+actor "Abogado Principal" as AB
+participant "ReporteController" as CTRL
+participant "ReporteService" as SVC
+database "BD Casos" as DB
+
+AB -> CTRL : generarReporte(abogadoId, filtros)
+activate CTRL
+
+CTRL -> SVC : generar(abogadoId, filtros)
+activate SVC
+
+SVC -> DB : consultarCasos(abogadoId, filtros)
+activate DB
+DB --> SVC : datosCasos
+deactivate DB
+
+SVC -> SVC : construirReporte(datosCasos)
+
+SVC --> CTRL : reporte generado
+CTRL --> AB : 200 OK (reporte)
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

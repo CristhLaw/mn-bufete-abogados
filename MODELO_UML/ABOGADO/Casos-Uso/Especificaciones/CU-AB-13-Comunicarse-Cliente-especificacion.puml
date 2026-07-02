@@ -1,0 +1,31 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-13",
+  "Nombre": "Comunicarse con el Cliente",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "Cliente, MS Comunicacion, ChatController, VideollamadaService",
+  "Descripcion": "El sistema permite al Abogado Principal comunicarse con sus clientes mediante chat en tiempo real y videollamadas.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "El cliente existe en el sistema",
+    "Existe al menos un caso compartido",
+    "MS Comunicacion esta operativo"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a Comunicacion",
+    "Sistema lista los clientes",
+    "Abogado selecciona un cliente",
+    "Se abre el chat en tiempo real",
+    "Abogado puede escribir y enviar mensajes",
+    "Sistema entrega el mensaje",
+    "Se registra el historial",
+    "Para videollamada: Abogado selecciona Iniciar",
+    "Sistema genera sala de Jitsi"
+  ],
+  "Postcondiciones": [
+    "Los mensajes se han entregado",
+    "Historial de conversacion accesible",
+    "Notificaciones enviadas correctamente"
+  ]
+}
+@endjson

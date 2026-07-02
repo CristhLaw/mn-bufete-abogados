@@ -1,0 +1,76 @@
+@startuml Abogado-Clases-MSCasosLegales
+
+enum EstadoCaso {
+  ACTIVO
+  EN_AUDIENCIA
+  EN_ESPERA
+  CERRADO
+  ARCHIVADO
+}
+
+class Caso {
+  - id: UUID
+  - numeroExpediente: String
+  - estado: EstadoCaso
+  - fechaCreacion: Date
+  - abogadoId: UUID
+  - clienteId: UUID
+  --
+  + actualizarEstado(nuevoEstado: EstadoCaso): void
+  + asignarAbogado(abogadoId: UUID): void
+  + cerrar(): void
+}
+
+class Expediente {
+  - id: UUID
+  - casoId: UUID
+  - fechaApertura: Date
+  --
+  + agregarActuacion(a: ActuacionProcesal): void
+  + listarActuaciones(): List<ActuacionProcesal>
+}
+
+class ActuacionProcesal {
+  - id: UUID
+  - expedienteId: UUID
+  - tipo: String
+  - fecha: Date
+  - descripcion: String
+  - usuarioResponsableId: UUID
+  --
+  + registrar(): void
+}
+
+class Resolucion {
+  - id: UUID
+  - casoId: UUID
+  - fecha: Date
+  - contenido: String
+  - abogadoId: UUID
+  --
+  + registrar(): void
+}
+
+class AsignacionAbogadoService {
+  --
+  + validarLimiteCasos(abogadoId: UUID): boolean
+}
+
+Caso "1" *-- "1" Expediente : contiene
+Expediente "1" o-- "0..*" ActuacionProcesal : registra
+Caso "1" -- "0..1" Resolucion : resuelve >
+Caso --> EstadoCaso
+AsignacionAbogadoService ..> Caso : valida asignación
+
+note right of Resolucion
+  CU-AB-11: la Resolución puede
+  extender el caso a Cerrar Caso
+  (CU-AB-12)
+end note
+
+note bottom of AsignacionAbogadoService
+  RN-11: máximo 20 casos
+  activos por abogado
+end note
+
+@enduml

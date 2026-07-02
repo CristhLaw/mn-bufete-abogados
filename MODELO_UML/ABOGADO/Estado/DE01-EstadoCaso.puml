@@ -1,0 +1,36 @@
+@startuml Abogado-Estado-Caso
+
+title Ciclo de Vida de Caso (EstadoCasoMachine)
+
+[*] --> ACTIVO : crear caso\n(CU-AB-04)
+
+ACTIVO --> EN_AUDIENCIA : agendar audiencia\n(CU-AB-09)
+EN_AUDIENCIA --> EN_ESPERA : audiencia realizada,\nen espera de resolución
+EN_ESPERA --> EN_AUDIENCIA : nueva audiencia agendada
+EN_ESPERA --> ACTIVO : reactivar caso
+
+ACTIVO --> CERRADO : registrar resolución\ny cerrar (CU-AB-11, CU-AB-12)
+EN_AUDIENCIA --> CERRADO : registrar resolución\ny cerrar (CU-AB-11, CU-AB-12)
+EN_ESPERA --> CERRADO : registrar resolución\ny cerrar (CU-AB-11, CU-AB-12)
+
+CERRADO --> ARCHIVADO : archivar caso\n(automático o manual)
+
+ARCHIVADO --> [*]
+
+note right of ACTIVO
+  Estado inicial tras
+  CU-AB-04 Crear Expediente
+end note
+
+note right of CERRADO
+  Requiere CU-AB-11
+  Registrar Resolución
+  (EstadoCasoMachine)
+end note
+
+note right of ARCHIVADO
+  Estado final del caso,
+  solo lectura
+end note
+
+@enduml

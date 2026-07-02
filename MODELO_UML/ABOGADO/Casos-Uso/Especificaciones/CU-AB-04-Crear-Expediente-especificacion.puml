@@ -1,0 +1,31 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-04",
+  "Nombre": "Crear Expediente",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales, MS Usuarios, BD Casos",
+  "Descripcion": "El sistema permite al Abogado Principal crear nuevo expediente legal, registrando datos cliente, rama legal, detalles caso y especialidad aplicable.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Cliente esta registrado en sistema",
+    "No excede limite de 20 casos activos",
+    "Rama legal es valida"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a Crear Nuevo Caso",
+    "Sistema muestra formulario",
+    "Abogado selecciona cliente",
+    "Abogado selecciona rama legal",
+    "Abogado ingresa descripcion",
+    "Sistema genera numero de expediente",
+    "Abogado confirma creacion",
+    "Sistema registra caso en estado Activo"
+  ],
+  "Postcondiciones": [
+    "Expediente creado exitosamente",
+    "Numero de expediente asignado",
+    "Cliente asociado al caso",
+    "Historial de actuaciones inicializado"
+  ]
+}
+@endjson

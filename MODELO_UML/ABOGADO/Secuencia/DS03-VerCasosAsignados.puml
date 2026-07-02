@@ -1,0 +1,32 @@
+@startuml CU-AB-03-ver-casos-asignados-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "AsignacionAbogadoService" as SVC
+database "BD Casos" as DB
+
+AB -> CTRL : verCasosAsignados()
+activate CTRL
+
+CTRL -> SVC : listarCasos(abogadoId)
+activate SVC
+
+SVC -> DB : buscarPorAbogado(abogadoId)
+activate DB
+DB --> SVC : listaCasos
+deactivate DB
+
+SVC -> SVC : contarCasosActivos(listaCasos)
+
+note right of SVC
+  RN-11: verifica que el conteo
+  de casos activos no supere 20
+end note
+
+SVC --> CTRL : listaCasos, totalActivos
+CTRL --> AB : casos asignados
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

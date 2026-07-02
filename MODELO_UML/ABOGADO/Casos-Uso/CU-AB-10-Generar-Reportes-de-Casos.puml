@@ -1,0 +1,20 @@
+@startuml CU-AB-10-generar-reportes-casos
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Reportes" {
+  usecase "CU-AB-10\nGenerar Reportes de Casos" as CU10
+}
+
+AB --> CU10
+
+note right of CU10
+  ReporteController
+  reportes de sus propios casos
+end note
+
+@enduml

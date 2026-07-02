@@ -1,0 +1,33 @@
+@startuml CU-AB-09-gestionar-citas-audiencias-secuencia
+
+actor "Abogado Principal" as AB
+participant "AgendaController" as CTRL
+participant "DisponibilidadValidator" as VAL
+database "BD Agenda" as DB
+
+AB -> CTRL : agendarCita(casoId, fecha, hora)
+activate CTRL
+
+CTRL -> VAL : validarDisponibilidad(fecha, hora)
+activate VAL
+VAL -> DB : consultarAgenda(fecha, hora)
+activate DB
+DB --> VAL : ocupacion
+deactivate DB
+
+alt anticipación >= 24h y horario libre
+  VAL --> CTRL : disponible
+  CTRL -> DB : persistir(cita, estado=PROGRAMADA)
+  activate DB
+  DB --> CTRL : confirmación
+  deactivate DB
+  CTRL --> AB : 201 Created (cita programada)
+else anticipación < 24h u horario ocupado
+  VAL --> CTRL : no disponible
+  CTRL --> AB : 409 Conflict\n(no cumple 24h o está ocupado)
+end
+
+deactivate VAL
+deactivate CTRL
+
+@enduml

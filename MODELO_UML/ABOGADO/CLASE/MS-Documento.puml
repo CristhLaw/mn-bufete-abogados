@@ -1,0 +1,34 @@
+@startuml Abogado-Clases-MSDocumentos
+
+class Documento {
+  - id: UUID
+  - casoId: UUID
+  - nombre: String
+  - tipo: String
+  - urlCloudinary: String
+  - fechaSubida: Date
+  - subidoPorId: UUID
+  --
+  + subir(archivo: Binary): void
+  + descargar(): Binary
+}
+
+class CloudinaryAdapter {
+  --
+  + almacenar(archivo: Binary): String
+  + obtener(url: String): Binary
+}
+
+class Caso {
+  - id: UUID
+}
+
+Caso "1" -- "0..*" Documento : posee >
+Documento ..> CloudinaryAdapter : usa
+
+note right of Caso
+  Clase definida completa en
+  Abogado-Clases-MSCasosLegales.puml
+end note
+
+@enduml

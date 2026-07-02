@@ -1,0 +1,20 @@
+@startuml CU-AB-08-subir-documentos-legales
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Documentos" {
+  usecase "CU-AB-08\nSubir Documentos Legales" as CU08
+}
+
+AB --> CU08
+
+note right of CU08
+  DocumentoController /
+  CloudinaryAdapter
+end note
+
+@enduml

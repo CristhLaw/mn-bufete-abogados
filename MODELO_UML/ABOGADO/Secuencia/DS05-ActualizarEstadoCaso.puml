@@ -1,0 +1,29 @@
+@startuml CU-AB-05-actualizar-estado-caso-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "EstadoCasoMachine" as MACHINE
+database "BD Casos" as DB
+
+AB -> CTRL : actualizarEstado(casoId, nuevoEstado)
+activate CTRL
+
+CTRL -> MACHINE : validarTransicion(estadoActual, nuevoEstado)
+activate MACHINE
+
+alt transición válida\n(según ciclo: Activo→En Audiencia→En Espera→Cerrado→Archivado)
+  MACHINE --> CTRL : transición permitida
+  CTRL -> DB : actualizarEstado(casoId, nuevoEstado)
+  activate DB
+  DB --> CTRL : confirmación
+  deactivate DB
+  CTRL --> AB : 200 OK (nuevo estado)
+else transición inválida
+  MACHINE --> CTRL : transición no permitida
+  CTRL --> AB : 400 Bad Request\n(transición inválida)
+end
+
+deactivate MACHINE
+deactivate CTRL
+
+@enduml

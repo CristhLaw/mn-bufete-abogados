@@ -1,0 +1,29 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-02",
+  "Nombre": "Gestionar Perfil Profesional",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Usuarios",
+  "Descripcion": "El sistema permite al Abogado Principal actualizar su informacion profesional, incluyendo datos personales, especialidades legales y datos de contacto.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Perfil del Abogado existe en el sistema",
+    "MS Usuarios esta operativo"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a seccion Mi Perfil",
+    "Sistema obtiene datos actuales",
+    "Abogado visualiza sus datos",
+    "Abogado edita campos deseados",
+    "Sistema valida datos",
+    "Abogado confirma cambios",
+    "Sistema persiste en BD",
+    "Sistema muestra confirmacion"
+  ],
+  "Postcondiciones": [
+    "Datos del perfil actualizados correctamente",
+    "Especialidad se refleja en sistema de asignacion",
+    "Abogado permanece con sesion activa"
+  ]
+}
+@endjson

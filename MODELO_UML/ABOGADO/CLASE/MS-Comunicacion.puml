@@ -1,0 +1,47 @@
+@startuml Abogado-Clases-MSComunicacion
+
+class Chat {
+  - id: UUID
+  - casoId: UUID
+  - abogadoId: UUID
+  - clienteId: UUID
+  --
+  + enviarMensaje(m: Mensaje): void
+  + listarMensajes(): List<Mensaje>
+}
+
+class Mensaje {
+  - id: UUID
+  - chatId: UUID
+  - emisorId: UUID
+  - contenido: String
+  - fechaHora: Date
+}
+
+class Videollamada {
+  - id: UUID
+  - casoId: UUID
+  - abogadoId: UUID
+  - clienteId: UUID
+  - fechaHora: Date
+  - duracionMinutos: Integer
+  - enlace: String
+  --
+  + iniciar(): void
+  + finalizar(): void
+}
+
+class Caso {
+  - id: UUID
+}
+
+Caso "1" -- "0..1" Chat : habilita >
+Chat "1" *-- "0..*" Mensaje : contiene
+Caso "1" -- "0..*" Videollamada : programa >
+
+note right of Caso
+  Clase definida completa en
+  Abogado-Clases-MSCasosLegales.puml
+end note
+
+@enduml

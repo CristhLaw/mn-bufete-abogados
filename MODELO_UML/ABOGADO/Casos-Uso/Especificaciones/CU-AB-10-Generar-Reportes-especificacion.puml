@@ -1,0 +1,30 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-10",
+  "Nombre": "Generar Reportes de Casos",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Reportes, ExportadorPDF, ExportadorExcel",
+  "Descripcion": "El sistema permite al Abogado Principal generar reportes de sus casos legales en formatos PDF o Excel.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Existen casos asignados",
+    "MS Reportes esta operativo"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a seccion Reportes",
+    "Sistema presenta opciones de reporte",
+    "Abogado selecciona tipo de reporte",
+    "Sistema permite filtrar",
+    "Abogado confirma los filtros",
+    "Sistema recopila datos",
+    "Sistema formatea los datos",
+    "Sistema genera archivo descargable",
+    "Abogado descarga el archivo"
+  ],
+  "Postcondiciones": [
+    "Reporte generado correctamente",
+    "Archivo disponible en formato solicitado",
+    "Reporte incluye informacion completa"
+  ]
+}
+@endjson

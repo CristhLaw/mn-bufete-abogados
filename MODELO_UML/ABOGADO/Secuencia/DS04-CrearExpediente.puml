@@ -1,0 +1,37 @@
+@startuml CU-AB-04-crear-expediente-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "AsignacionAbogadoService" as ASIG
+participant "ExpedienteService" as EXP
+database "BD Casos" as DB
+
+AB -> CTRL : crearExpediente(datosCaso)
+activate CTRL
+
+CTRL -> ASIG : validarLimiteCasos(abogadoId)
+activate ASIG
+ASIG -> DB : contarCasosActivos(abogadoId)
+activate DB
+DB --> ASIG : total
+deactivate DB
+ASIG --> CTRL : limiteOk (boolean)
+deactivate ASIG
+
+alt límite no superado (< 20 casos)
+  CTRL -> EXP : crear(datosCaso)
+  activate EXP
+  EXP -> DB : persistir(caso, expediente)
+  activate DB
+  DB --> EXP : confirmación
+  deactivate DB
+  EXP --> CTRL : expediente creado
+  CTRL --> AB : 201 Created
+  deactivate EXP
+else límite superado
+  CTRL --> AB : 409 Conflict\n(máximo 20 casos activos)
+end
+
+deactivate CTRL
+
+@enduml

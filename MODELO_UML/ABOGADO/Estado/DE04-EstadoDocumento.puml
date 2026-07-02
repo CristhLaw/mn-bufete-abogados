@@ -1,0 +1,30 @@
+@startuml Abogado-Estado-Documento
+
+title Ciclo de Vida de Documento
+
+[*] --> SUBIDO : subir documento\n(CU-AB-08, CloudinaryAdapter)
+
+SUBIDO --> DISPONIBLE : DocumentoController\nconfirma almacenamiento
+SUBIDO --> ERROR_SUBIDA : fallo en\nCloudinaryAdapter
+
+DISPONIBLE --> REVISADO : abogado revisa\ndocumento (CU-AB-07)
+REVISADO --> DESCARGADO : abogado descarga\ndocumento (CU-AB-07)
+
+DISPONIBLE --> DESCARGADO : abogado descarga\nsin marcar revisión
+
+ERROR_SUBIDA --> SUBIDO : reintentar subida
+
+DESCARGADO --> [*]
+REVISADO --> [*]
+
+note right of SUBIDO
+  Estado inicial tras
+  CU-AB-08 Subir Documentos
+end note
+
+note right of DISPONIBLE
+  Visible en el expediente
+  del Caso
+end note
+
+@enduml

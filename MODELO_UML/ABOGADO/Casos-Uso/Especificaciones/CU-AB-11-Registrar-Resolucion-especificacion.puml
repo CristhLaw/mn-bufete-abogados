@@ -1,0 +1,30 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-11",
+  "Nombre": "Registrar Resolucion",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Casos Legales, CasoService",
+  "Descripcion": "El sistema permite al Abogado Principal registrar la resolucion judicial documentando el veredicto y la fecha del fallo.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Caso esta en estado En Audiencia o En Espera"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a los detalles del caso",
+    "Abogado selecciona Registrar Resolucion",
+    "Sistema muestra formulario",
+    "Abogado ingresa el veredicto",
+    "Abogado ingresa la fecha exacta",
+    "Abogado agrega detalles",
+    "Abogado adjunta copia de resolucion",
+    "Abogado confirma el registro",
+    "Sistema persiste en BD"
+  ],
+  "Postcondiciones": [
+    "Resolucion registrada",
+    "Caso puede transicionar a Cerrado",
+    "Log de auditoria registrado"
+  ]
+}
+@endjson

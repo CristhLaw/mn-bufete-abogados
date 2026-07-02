@@ -1,0 +1,21 @@
+@startuml CU-AB-12-cerrar-caso
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Casos Legales" {
+  usecase "CU-AB-12\nCerrar Caso" as CU12
+}
+
+AB --> CU12
+
+note right of CU12
+  EstadoCasoMachine
+  transición final del caso
+  a estado Cerrado
+end note
+
+@enduml

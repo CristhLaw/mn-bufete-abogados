@@ -1,0 +1,37 @@
+@startuml CU-AB-06-registrar-actuacion-procesal-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "ActuacionProcesalService" as SVC
+database "BD Expedientes" as DB
+
+AB -> CTRL : registrarActuacion(casoId, tipo, fecha, descripcion, adjuntos)
+activate CTRL
+
+CTRL -> SVC : validarYRegistrar(datos)
+activate SVC
+
+alt tipo válido y fecha <= hoy
+  SVC -> DB : persistir(actuacion)
+  activate DB
+  DB --> SVC : confirmación
+  deactivate DB
+  SVC -> SVC : asignarTimestamp()\nasignarUsuarioResponsable()
+  SVC -> DB : registrarLogAuditoria(actuacion)
+  activate DB
+  DB --> SVC : ok
+  deactivate DB
+  SVC --> CTRL : actuación registrada
+  CTRL --> AB : 201 Created
+else tipo inválido
+  SVC --> CTRL : error (tipo no en catálogo)
+  CTRL --> AB : 400 Bad Request
+else fecha futura
+  SVC --> CTRL : error (fecha inválida)
+  CTRL --> AB : 400 Bad Request
+end
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml Abogado-Estado-CitaAudiencia
+
+title Ciclo de Vida de CitaAudiencia
+
+[*] --> SOLICITADA : agendar cita/audiencia\n(CU-AB-09)
+
+SOLICITADA --> PROGRAMADA : DisponibilidadValidator\nvalida 24h de anticipación
+SOLICITADA --> RECHAZADA : no cumple\nvalidación de 24h
+
+PROGRAMADA --> REPROGRAMADA : abogado reprograma\n(nueva validación 24h)
+REPROGRAMADA --> PROGRAMADA : nueva fecha validada
+
+PROGRAMADA --> CANCELADA : abogado o cliente\ncancela
+REPROGRAMADA --> CANCELADA : cancelación antes\nde la nueva fecha
+
+PROGRAMADA --> REALIZADA : fecha de la\naudiencia se cumple
+
+REALIZADA --> [*]
+CANCELADA --> [*]
+RECHAZADA --> [*]
+
+note right of SOLICITADA
+  Estado inicial tras
+  CU-AB-09 Gestionar Citas
+end note
+
+note right of RECHAZADA
+  DisponibilidadValidator:
+  regla de 24h no cumplida
+end note
+
+note right of REALIZADA
+  Puede disparar registro de
+  ActuacionProcesal (CU-AB-06)
+  o notificación (SISNOT)
+end note
+
+@enduml

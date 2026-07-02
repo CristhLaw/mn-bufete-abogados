@@ -1,0 +1,41 @@
+@startuml Abogado-Clases-MSAgendaAudiencias
+
+class CitaAudiencia {
+  - id: UUID
+  - casoId: UUID
+  - abogadoId: UUID
+  - clienteId: UUID
+  - fecha: Date
+  - hora: Time
+  - tipo: String
+  - ubicacion: String
+  - estado: String
+  --
+  + agendar(): void
+  + reprogramar(nuevaFecha: Date): void
+  + cancelar(): void
+}
+
+class DisponibilidadValidator {
+  --
+  + validarDisponibilidad(fecha: Date): boolean
+}
+
+class Caso {
+  - id: UUID
+}
+
+Caso "1" -- "0..*" CitaAudiencia : programa >
+CitaAudiencia ..> DisponibilidadValidator : valida
+
+note right of DisponibilidadValidator
+  Regla: valida disponibilidad
+  con 24h de anticipación
+end note
+
+note right of Caso
+  Clase definida completa en
+  Abogado-Clases-MSCasosLegales.puml
+end note
+
+@enduml

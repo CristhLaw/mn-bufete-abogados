@@ -1,0 +1,32 @@
+@startuml Abogado-Clases-MSUsuarios
+
+class Abogado {
+  - id: UUID
+  - nombre: String
+  - email: String
+  - especialidadLegal: String
+  - numeroColegiatura: String
+  - fechaRegistro: Date
+  --
+  + actualizarPerfil(datos: PerfilDTO): void
+  + verCasosAsignados(): List<Caso>
+}
+
+class Caso {
+  - id: UUID
+}
+
+Abogado "1" -- "0..20" Caso : gestiona >
+
+note bottom of Abogado
+  RN-11 (AsignacionAbogadoService,
+  MS Casos Legales): máximo 20
+  casos activos simultáneos
+end note
+
+note right of Caso
+  Clase definida completa en
+  Abogado-Clases-MSCasosLegales.puml
+end note
+
+@enduml

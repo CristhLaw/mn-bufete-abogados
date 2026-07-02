@@ -1,0 +1,20 @@
+@startuml CU-AB-01-iniciar-sesion
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Autenticación" {
+  usecase "CU-AB-01\nIniciar Sesión" as CU01
+}
+
+AB --> CU01
+
+note right of CU01
+  MS Autenticación
+  login y gestión de sesión
+end note
+
+@enduml

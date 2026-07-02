@@ -1,0 +1,24 @@
+@startuml Abogado-Clases-MSReportes
+
+class Reporte {
+  - id: UUID
+  - abogadoId: UUID
+  - tipo: String
+  - fechaGeneracion: Date
+  - contenido: String
+  --
+  + generar(): void
+}
+
+class Abogado {
+  - id: UUID
+}
+
+Abogado "1" -- "0..*" Reporte : genera >
+
+note right of Abogado
+  Clase definida completa en
+  Abogado-Clases-MSUsuarios.puml
+end note
+
+@enduml

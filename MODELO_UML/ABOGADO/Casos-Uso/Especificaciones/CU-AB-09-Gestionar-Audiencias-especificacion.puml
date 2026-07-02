@@ -1,0 +1,30 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-09",
+  "Nombre": "Gestionar Citas y Audiencias",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Agenda, DisponibilidadValidator, RecordatorioScheduler",
+  "Descripcion": "El sistema permite al Abogado Principal agendar, reprogramar y cancelar audiencias y citas respetando 24 horas minimo.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Fecha/hora de audiencia son futuras"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede Gestionar Audiencias",
+    "Sistema muestra calendario",
+    "Abogado selecciona fecha y hora",
+    "Sistema verifica sin conflictos",
+    "Abogado selecciona tipo",
+    "Abogado agrega detalles",
+    "Abogado confirma agendamiento",
+    "Sistema registra audiencia",
+    "Sistema programa recordatorios"
+  ],
+  "Postcondiciones": [
+    "Audiencia agendada",
+    "Cliente notificado",
+    "Recordatorios programados"
+  ]
+}
+@endjson

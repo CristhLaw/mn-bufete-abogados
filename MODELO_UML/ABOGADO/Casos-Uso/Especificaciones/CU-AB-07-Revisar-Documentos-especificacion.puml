@@ -1,0 +1,29 @@
+@startjson
+{
+  "CasoDeUso": "CU-AB-07",
+  "Nombre": "Revisar Documentos",
+  "ActorPrimario": "Abogado Principal",
+  "ActorSecundario": "MS Documentos, CloudinaryAdapter",
+  "Descripcion": "El sistema permite al Abogado Principal consultar y descargar los documentos legales asociados a un caso.",
+  "Precondiciones": [
+    "Abogado Principal ha iniciado sesion",
+    "Caso existe y esta asignado",
+    "Documentos asociados existen"
+  ],
+  "FlujoPrincipal": [
+    "Abogado accede a detalles del caso",
+    "Abogado selecciona seccion Documentos",
+    "Sistema lista documentos asociados",
+    "Se muestran: nombre, tipo, fecha, usuario",
+    "Abogado selecciona documento",
+    "Sistema obtiene URL desde Cloudinary",
+    "Documento se descarga o visualiza",
+    "Sistema registra acceso"
+  ],
+  "Postcondiciones": [
+    "Abogado accedio al documento",
+    "Log de acceso registrado",
+    "Documento permanece integro"
+  ]
+}
+@endjson

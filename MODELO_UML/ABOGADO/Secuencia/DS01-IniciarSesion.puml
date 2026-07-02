@@ -1,0 +1,31 @@
+@startuml CU-AB-01-iniciar-sesion-secuencia
+
+actor "Abogado Principal" as AB
+participant "LoginController" as CTRL
+participant "AuthService" as SVC
+database "BD Usuarios" as DB
+
+AB -> CTRL : login(email, password)
+activate CTRL
+
+CTRL -> SVC : autenticar(email, password)
+activate SVC
+
+SVC -> DB : buscarUsuario(email)
+activate DB
+DB --> SVC : usuario
+deactivate DB
+
+alt credenciales válidas
+  SVC -> SVC : generarToken(usuario)
+  SVC --> CTRL : token, sesion
+  CTRL --> AB : 200 OK (token)
+else credenciales inválidas
+  SVC --> CTRL : error autenticación
+  CTRL --> AB : 401 Unauthorized
+end
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

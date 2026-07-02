@@ -1,8 +1,0 @@
-@startuml
-class Singleton {
-  - static volatile Singleton instancia
-  - Singleton()
-  + static Singleton getInstance()
-  + void ejecutar()
-}
-@enduml

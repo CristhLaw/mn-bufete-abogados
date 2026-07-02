@@ -1,0 +1,34 @@
+@startuml CU-AB-11-registrar-resolucion-secuencia
+
+actor "Abogado Principal" as AB
+participant "CasoController" as CTRL
+participant "ResolucionService" as SVC
+database "BD Casos" as DB
+
+AB -> CTRL : registrarResolucion(casoId, contenido)
+activate CTRL
+
+CTRL -> SVC : registrar(casoId, contenido, abogadoId)
+activate SVC
+
+alt caso existe y está asignado al abogado
+  SVC -> DB : persistir(resolucion)
+  activate DB
+  DB --> SVC : confirmación
+  deactivate DB
+  SVC --> CTRL : resolución registrada
+  CTRL --> AB : 201 Created
+
+  note over AB, CTRL
+    <<extend>> Puede continuar
+    con CU-AB-12 Cerrar Caso
+  end note
+else caso no existe o no pertenece al abogado
+  SVC --> CTRL : error
+  CTRL --> AB : 403 Forbidden / 404 Not Found
+end
+
+deactivate SVC
+deactivate CTRL
+
+@enduml

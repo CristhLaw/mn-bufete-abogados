@@ -1,0 +1,20 @@
+@startuml CU-AB-02-gestionar-perfil-profesional
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Usuarios" {
+  usecase "CU-AB-02\nGestionar Perfil Profesional" as CU02
+}
+
+AB --> CU02
+
+note right of CU02
+  MS Usuarios
+  datos y especialidad legal
+end note
+
+@enduml

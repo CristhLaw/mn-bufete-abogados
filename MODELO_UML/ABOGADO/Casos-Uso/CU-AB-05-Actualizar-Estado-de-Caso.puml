@@ -1,0 +1,22 @@
+@startuml CU-AB-05-actualizar-estado-caso
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+
+actor "Abogado Principal" as AB
+
+rectangle "MS Casos Legales" {
+  usecase "CU-AB-05\nActualizar Estado de Caso" as CU05
+}
+
+AB --> CU05
+
+note right of CU05
+  EstadoCasoMachine
+  Ciclo de estado:
+  Activo -> En Audiencia ->
+  En Espera -> Cerrado -> Archivado
+end note
+
+@enduml
