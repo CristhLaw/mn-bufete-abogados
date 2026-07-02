@@ -1,0 +1,48 @@
+@startuml
+left to right direction
+!theme bluegray
+
+skinparam footerFontColor black
+title <size:20><b>Caso de uso "CU02 - Administrar Expedientes"</b></size>
+
+' =====================================================
+' ACTORES
+' =====================================================
+actor "Abogado" as abogado
+actor "Cliente" as cliente
+
+' =====================================================
+' SISTEMA
+' =====================================================
+rectangle "IURIS - Sistema Integral"{
+    usecase "◉\n<size:18><b>CU02</b></size>\nAdministrar Expedientes" as UC_Expediente
+    usecase "📁\nRegistrar Apertura" as UC_Apertura
+    usecase "📝\nRegistrar Actuación" as UC_Actuacion
+    usecase "🔍\nConsultar Estado" as UC_Consultar
+    usecase "🔑\nAutenticar Usuario" as UC_Auth
+}
+
+' =====================================================
+' RELACIONES
+' =====================================================
+abogado --> UC_Expediente
+cliente --> UC_Consultar
+
+UC_Expediente .> UC_Apertura : <<include>>
+UC_Expediente .> UC_Actuacion : <<include>>
+UC_Expediente .> UC_Auth : <<include>>
+UC_Consultar .> UC_Auth : <<include>>
+
+legend right
+|= <b>Símbolo</b> |= <b>Descripción</b> |
+| ◉ | Caso de uso principal |
+| 📁 | Apertura de caso |
+| 📝 | Registro de movimientos |
+| 🔍 | Consulta de avance |
+| 🔑 | Flujo obligatorio de sesión |
+endlegend
+
+footer
+<b>IURIS - LexTech Solutions S.A.C.</b>
+endfooter
+@enduml

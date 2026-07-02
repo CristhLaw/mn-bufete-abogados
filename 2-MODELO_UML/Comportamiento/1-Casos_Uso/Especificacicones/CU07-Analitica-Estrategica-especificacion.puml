@@ -1,0 +1,27 @@
+@startjson
+{
+  "Caso de uso": "Analítica Estratégica",
+  "Id": "CU-07",
+  "Breve descripción": "El gerente supervisa el desempeño del bufete mediante reportes y dashboards consolidados que integran datos operativos de todos los microservicios.",
+  "Actores primarios": "Gerente / Socio, Administrador",
+  "Actores secundarios": "MS Reportes, MS Casos, MS Agenda",
+  "Precondiciones": [
+    "El usuario tiene una sesión activa con rol administrativo o gerencial."
+  ],
+  "Flujo principal": {
+    "1": "El usuario accede al dashboard ejecutivo.",
+    "2": "El sistema (ReporteService) invoca (mediante Feign Clients) a los MS Casos, Agenda y Usuarios.",
+    "3": "El sistema consolida los KPIs: casos activos, tasa de cumplimiento, productividad de abogados.",
+    "4": "El sistema muestra las gráficas en tiempo real en la interfaz.",
+    "5": "El usuario solicita la exportación de reportes detallados en formato PDF o Excel."
+  },
+  "Postcondiciones": [
+    "Se generan reportes actualizados para la toma de decisiones.",
+    "Se mantienen snapshots históricos para análisis de tendencias."
+  ],
+  "Flujos alternativos": {
+    "A1: Sin datos disponibles": "El sistema indica que no existen registros en el rango de fechas seleccionado.",
+    "A2: Timeout en microservicio": "El sistema intenta la recolección de datos y muestra una advertencia si algún servicio no responde."
+  }
+}
+@endjson

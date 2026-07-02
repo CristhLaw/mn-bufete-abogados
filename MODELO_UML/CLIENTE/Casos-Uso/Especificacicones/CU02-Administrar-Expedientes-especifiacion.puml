@@ -1,0 +1,33 @@
+@startjson
+{
+  "Caso de uso": "Administrar Expedientes",
+  "Id": "CU02",
+  "Breve descripción": "Permite al abogado gestionar (crear, editar, consultar y archivar) los expedientes legales de los clientes, centralizando la información del caso.",
+  "Actores primarios": "Abogado",
+  "Actores secundarios": "Cliente (solo consulta), Sistema de Auditoría",
+  "Precondiciones": [
+    "El abogado ha iniciado sesión (CU01).",
+    "El abogado cuenta con permisos de nivel 'Escritura' en el MS Casos Legales."
+  ],
+  "Flujo principal": {
+    "1": "El abogado accede a la sección 'Mis Casos' y selecciona 'Nuevo Expediente'.",
+    "2": "El sistema solicita los datos básicos (Título, Cliente, Materia, Fecha, Estado).",
+    "3": "El abogado ingresa la información y confirma la creación.",
+    "4": "El sistema valida la integridad de los datos y crea el registro en la base de datos (DB Casos).",
+    "5": "El sistema genera un ID único de expediente y notifica al cliente asignado."
+  },
+  "Postcondiciones": [
+    "El expediente queda disponible para ser utilizado en el Repositorio de Documentos (CU05) y el Canal de Interacción (CU04).",
+    "Se genera un log de auditoría del evento de creación."
+  ],
+  "Flujos alternativos": {
+    "A1: Datos incompletos": "El sistema resalta los campos obligatorios faltantes y no permite el guardado.",
+    "A2: Error de conexión": "El sistema muestra un aviso de 'Servicio no disponible' y mantiene los datos en caché local."
+  },
+  "Reglas de negocio": [
+    "RN-EXP-01: Un expediente solo puede ser archivado si todos sus hitos legales están cerrados.",
+    "RN-EXP-02: El historial de cambios en el expediente debe ser inmutable."
+  ]
+}
+
+@endjson
