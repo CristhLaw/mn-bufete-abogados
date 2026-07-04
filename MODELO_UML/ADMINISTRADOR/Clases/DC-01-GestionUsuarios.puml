@@ -1,0 +1,46 @@
+﻿@startuml
+title Diagrama de Clases - Gestion de Usuarios y Sedes (Administrador)
+skinparam classAttributeIconSize 0
+skinparam ClassBackgroundColor #F8F9F9
+skinparam ClassBorderColor #2E4053
+
+class Usuario {
+    - id: Long
+    - correo: String
+    - estado: String
+    - fechaCreacion: LocalDateTime
+    + iniciarSesion()
+    + recuperarPassword()
+}
+
+class Administrador {
+    - nivelAcceso: Integer
+    + gestionarUsuarios()
+    + configurarSistema()
+    + verAuditoria()
+}
+
+class Sede {
+    - id: Long
+    - nombre: String
+    - direccion: String
+    - estaActiva: Boolean
+    + registrarSede()
+    + editarSede()
+}
+
+class Rol {
+    - id: Long
+    - nombre: String
+    - permisos: List<String>
+    + asignarRol()
+    + revocarRol()
+}
+
+Administrador --|> Usuario : hereda de
+Administrador "1" --> "*" Usuario : administra
+Administrador "1" --> "*" Sede : configura
+Usuario "*" --> "1" Rol : posee
+Usuario "*" --> "1" Sede : asignado a
+
+@enduml
